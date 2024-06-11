@@ -22,6 +22,10 @@ const VehicleSchema = new mongoose.Schema({
     city_price: [{
         name: { type: String, required: true },
         price: { type: Number, required: true }
+    }],
+    colors: [{
+        name: { type: String, required: true }, // Color name, e.g., "Red", "Blue", "Silver"
+        image_url: { type: String, required: true } // URL of the image showing the car in this color
     }]
 });
 

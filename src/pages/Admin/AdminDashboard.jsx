@@ -113,29 +113,29 @@ const AdminDashboard = () => {
             <div className="icon">
               <i className="fas fa-users"></i>
             </div>
-            <div className="title">Visitors</div>
-            <div className="value">1,294</div>
+            <div className="title">Brands</div>
+            <div className="value">23</div>
           </div>
           <div className="kaiadmin__card">
             <div className="icon">
               <i className="fas fa-user-check"></i>
             </div>
-            <div className="title">Subscribers</div>
-            <div className="value">1,303</div>
+            <div className="title">Cars</div>
+            <div className="value">204</div>
           </div>
           <div className="kaiadmin__card">
             <div className="icon">
               <i className="fas fa-shopping-cart"></i>
             </div>
-            <div className="title">Sales</div>
-            <div className="value">$1,345</div>
+            <div className="title">Users Registered</div>
+            <div className="value">879</div>
           </div>
           <div className="kaiadmin__card">
             <div className="icon">
               <i className="fas fa-check-circle"></i>
             </div>
-            <div className="title">Orders</div>
-            <div className="value">576</div>
+            <div className="title">Total visitors</div>
+            <div className="value">1356</div>
           </div>
           <div className="kaiadmin__user-stats">
             <div className="title">User Statistics</div>
