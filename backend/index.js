@@ -1,41 +1,37 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const connectDB = require('./db');
 require('dotenv').config();
 
+// Import routes
+const brandRoutes = require('./routes/brandRoutes');
+const categoryRoutes = require('./routes/categoryRoutes');
+const vehicleRoutes = require('./routes/vehicleRoutes');
+const cityPriceRoutes = require('./routes/cityPriceRoutes');
+
 const app = express();
 const port = process.env.PORT || 5000;
 
-app.use((req, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-    res.header(
-      'Access-Control-Allow-Headers',
-      'Origin, X-Requested-With, Content-Type, Accept'
-    );
-    next();
-  });
+// Middleware
+app.use(cors());
+app.use(bodyParser.json());
 
 // Connect to MongoDB
 connectDB();
-
-// Middleware
-app.use(cors());
-app.use(express.json());
 
 // Routes
 app.get('/', (req, res) => {
   res.send('Welcome to the MERN stack car portal!');
 });
 
-// // Example routes for Company and Employee (replace with your actual routes)
-// const companyRoutes = require('./routes/company');
-// const employeeRoutes = require('./routes/employee');
-const adminRoutes = require('./routes/admin');
-app.use('/api/admin', adminRoutes);
-// app.use('/api/lo', adminRoutes);
-// app.use('/api/employee', employeeRoutes);
+// Use routes
+app.use('/api/brands', brandRoutes);
+app.use('/api/categories', categoryRoutes); // Make sure this line is correct
+app.use('/api/vehicles', vehicleRoutes);
+app.use('/api/cityprices', cityPriceRoutes);
 
-// Start the server
+// Start server
 app.listen(port, () => {
   console.log(`App is running on port ${port}`);
 });
