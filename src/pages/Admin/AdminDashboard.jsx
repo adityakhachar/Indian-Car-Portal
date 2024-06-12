@@ -2,31 +2,14 @@
 import React from 'react';
 import '../../assets/styles/AdminDashboardStyle.css'; // Ensure the path is correct
 import Sidebar from '../../components/AdminLayout/SideBar'; // Adjust the path based on your project structure
+import AdminHeader from '../../components/AdminLayout/AdminHeader';
 
 const AdminDashboard = () => {
   return (
     <div className="kaiadmin">
       <Sidebar />
       <div className="kaiadmin__content">
-        <div className="kaiadmin__header">
-          <div className="notification">
-            <img
-              src="https://img.icons8.com/cotton/2x/appointment-reminders.png"
-              alt="Notification Icon"
-              className="notification-icon"
-            />
-          </div>
-          <div className="search">
-            <input type="text" placeholder="Search..." />
-            <button>
-              <i className="fas fa-search"></i>
-            </button>
-          </div>
-          <div className="user">
-            <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" alt="User Avatar" />
-            <span>Hi, Hizrian</span>
-          </div>
-        </div>
+        <AdminHeader/>
         <div className="kaiadmin__main">
           <div className="kaiadmin__card">
             <div className="icon">
