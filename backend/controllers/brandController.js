@@ -7,9 +7,19 @@ exports.createBrand = async (req, res) => {
         await brand.save();
         res.status(201).send(brand);
     } catch (error) {
-        res.status(400).send(error);
+        if (error.name === 'ValidationError') {
+            // Extract validation errors from the error object
+            const validationErrors = {};
+            for (let field in error.errors) {
+                validationErrors[field] = error.errors[field].message;
+            }
+            res.status(400).json({ error: 'Validation error', details: validationErrors });
+        } else {
+            res.status(500).send(error);
+        }
     }
 };
+
 
 // Get all brands
 exports.getBrands = async (req, res) => {

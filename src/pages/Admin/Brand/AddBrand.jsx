@@ -30,10 +30,52 @@ const AddBrand = () => {
 
   const handleCancel = () => setPreviewVisible(false);
 
-  const onFinish = values => {
-    console.log('Submitted values:', values);
-    // Here you can handle the form submission
+  const onFinish = async values => {
+    try {
+      // Extract name and image from the form values
+      const { name, imageLink } = values;
+  
+      // Create a payload object with the extracted data
+      const payload = {
+        name: name,
+        image: imageLink ? imageLink : imageUrl // Use imageLink if available, otherwise use imageUrl
+      };
+  
+      // Make a POST request to the backend API to create a new brand
+      const response = await fetch("http://localhost:5000/api/brands", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+  
+      // Parse the response data
+      const data = await response.json();
+  
+      // Check if the response is successful
+      if (!response.ok) {
+        // Handle different error scenarios...
+        // (Same error handling logic as before)
+      }
+  
+      // Log the response data
+      console.log('Brand created:', data);
+  
+      // Show success message to the user
+      message.success('Brand created successfully!');
+    } catch (error) {
+      // If an error occurs, log the error and show error message to the user
+      console.error('Error creating brand:', error);
+      message.error('Failed to create brand. Please try again later.');
+    }
   };
+  
+
+
+  
+
+  
 
   const normFile = e => {
     if (Array.isArray(e)) {
@@ -47,7 +89,8 @@ const AddBrand = () => {
   };
 
   const handleImageLinkChange = e => {
-    setImageUrl(e.target.value);
+    const url = e.target.value.trim(); // Remove leading/trailing spaces
+    setImageUrl(url); // Update imageUrl state variable
   };
 
   return (
@@ -64,7 +107,10 @@ const AddBrand = () => {
               </Radio.Group>
             </Form.Item>
             {imageSource === 'link' ? (
-              <Form.Item name="imageLink" label="Image Link" rules={[{ required: true, message: 'Please enter the image link!' }]}>
+              <Form.Item
+                name="imageLink"
+                label="Image Link"
+              >
                 <Input onChange={handleImageLinkChange} />
                 {imageUrl && <img src={imageUrl} alt="Brand" style={{ marginTop: '10px', width: '100px' }} />}
               </Form.Item>
