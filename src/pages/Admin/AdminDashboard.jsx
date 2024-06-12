@@ -1,94 +1,13 @@
-import React, { useState, useRef, useEffect } from 'react';
-import '../../assets/styles/AdminDashboardStyle.css'; // Assuming your CSS file is in the same directory
+// AdminDashboard.jsx
+import React from 'react';
+import '../../assets/styles/AdminDashboardStyle.css'; // Ensure the path is correct
+import Sidebar from '../../components/AdminLayout/SideBar'; // Adjust the path based on your project structure
 
 const AdminDashboard = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const sidebarRef = useRef(null);
-
-  const handleToggleSidebar = () => {
-    setIsOpen(!isOpen);
-  };
-
-  useEffect(() => {
-    const handleCloseSidebar = (event) => {
-      if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleCloseSidebar);
-
-    return () => {
-      document.removeEventListener('mousedown', handleCloseSidebar);
-    };
-  }, []);
-
   return (
     <div className="kaiadmin">
-      <img
-        src="https://img.icons8.com/?size=100&id=dMz54mFbVirR&format=png&color=000000"
-        alt="Drawer Icon"
-        className={`drawer-toggle ${isOpen ? 'open' : ''}`}
-        onClick={handleToggleSidebar}
-      />
-      <div ref={sidebarRef} className={`kaiadmin__sidebar ${isOpen ? 'open' : ''}`}>
-        <ul>
-          <li className="active">
-            <a href="#">
-              <i className="fas fa-home"></i> Dashboard
-            </a>
-          </li>
-          <li>
-            <a href="#">
-              <i className="fas fa-list-ul"></i> Components
-              <i className="fas fa-angle-down"></i>
-            </a>
-            <ul>
-              <li>
-                <a href="#">
-                  <i className="fas fa-database"></i> Base
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-list-alt"></i> Sidebar Layouts
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-file-alt"></i> Forms
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-table"></i> Tables
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-map-marker-alt"></i> Maps
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-chart-bar"></i> Charts
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-desktop"></i> Widgets
-                </a>
-              </li>
-              <li>
-                <a href="#">
-                  <i className="fas fa-bars"></i> Menu Levels
-                </a>
-              </li>
-            </ul>
-          </li>
-        </ul>
-      </div>
-      <div className={`kaiadmin__content ${isOpen ? 'shifted' : ''}`}>
+      <Sidebar />
+      <div className="kaiadmin__content">
         <div className="kaiadmin__header">
           <div className="notification">
             <img

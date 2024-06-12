@@ -18,41 +18,16 @@
     position: relative;
   }
   
-  .drawer-toggle {
-    height: 30px;
-    margin-left: 15px;
-    margin-top: 27px;
-    cursor: pointer;
-  }
-  
-  .close-button {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background-color: #343a40;
-    color: #fff;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-    z-index: 100;
-  }
-  
   .kaiadmin__sidebar {
     width: 250px;
     background-color: #343a40;
     color: #fff;
     padding: 20px;
-    transition: transform 0.3s ease;
-    transform: translateX(-250px);
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     overflow: hidden;
-  }
-  
-  .kaiadmin__sidebar.open {
-    transform: translateX(0);
   }
   
   .kaiadmin__sidebar ul {
@@ -96,11 +71,8 @@
   .kaiadmin__content {
     flex: 1;
     padding: 20px;
+    margin-left: 250px; /* Adjust margin-left for content to accommodate sidebar width */
     transition: margin-left 0.3s ease;
-  }
-  
-  .kaiadmin__content.shifted {
-    margin-left: 250px;
   }
   
   .kaiadmin__header {
@@ -122,16 +94,6 @@
     border-radius: 4px 0 0 4px;
     outline: none;
   }
-  
-  /* .kaiadmin__header .search button {
-    margin-left: 10px;
-    padding: 10px;
-    background-color: #495057;
-    border: 1px solid #495057;
-    color: #fff;
-    border-radius: 0 4px 4px 0;
-    cursor: pointer;
-  } */
   
   .kaiadmin__header .user {
     display: flex;
@@ -273,25 +235,6 @@
     display: block;
   }
   
-  .overlay {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 99;
-  }
-  
-  /* Media query for smaller screens */
-  @media (max-width: 768px) {
-    .kaiadmin__content {
-      margin-left: 0;
-    }
-  }
-  
-  /* End of Kai Admin Dashboard styles */
-  
   .notification-icon {
     width: 30px; /* Adjust size as needed */
     height: 30px; /* Adjust size as needed */
@@ -301,5 +244,12 @@
   
   .notification-icon:hover {
     filter: brightness(1.5); /* Example to make the icon brighter on hover */
+  }
+  
+  /* Media query for smaller screens */
+  @media (max-width: 768px) {
+    .kaiadmin__content {
+      margin-left: 0;
+    }
   }
   
