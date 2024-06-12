@@ -15,11 +15,12 @@ exports.createBrand = async (req, res) => {
 exports.getBrands = async (req, res) => {
     try {
         const brands = await Brand.find();
-        res.send(brands);
+        res.status(200).send(brands);
     } catch (error) {
         res.status(500).send(error.message);
     }
 };
+
 
 // Get brand by ID
 exports.getBrandById = async (req, res) => {
@@ -34,3 +35,5 @@ exports.getBrandById = async (req, res) => {
         res.status(500).send(error.message);
     }
 };
+
+

@@ -1,23 +1,62 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Space, Table } from "antd";
+import { Button, Table } from "antd";
 import { useNavigate } from "react-router-dom";
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
-// import brandData from './brandData'; // Sample brand data (replace with actual data)
 
 const Brand = () => {
   const [loading, setLoading] = useState(false);
   const [brands, setBrands] = useState([]);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // setLoading(true);
-    // // Simulating fetching data from an API
-    // setTimeout(() => {
-    //   setBrands(brandData); // Set brands data
-    //   setLoading(false);
-    // }, 1000); // Adjust the time as per your requirement
+useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        setLoading(true);
+        const response = await fetch("http://localhost:5000/api/brands", {
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        // console.log({data});
+        const data = await response.json();
+        console.log(data);
+
+        // Iterate through each brand to fetch the car count
+        const brandsWithCarCount = await Promise.all(data.map(async (brand) => {
+          const carCountResponse = await fetch(`http://localhost:5000/api/vehicles/brands/${brand._id}/cars`, {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+
+          if (!carCountResponse.ok) {
+            throw new Error(`HTTP error! Status: ${carCountResponse.status}`);
+          }
+
+          const carCountData = await carCountResponse.json();
+          console.log(carCountData);
+          return { ...brand, carCount: carCountData.vehicleCount };
+        }));
+
+        setBrands(brandsWithCarCount);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error loading brand data:', error);
+        setLoading(false);
+        // Handle error appropriately, such as setting an error state or displaying a message to the user
+      }
+    };
+
+    fetchBrands();
   }, []);
+
 
   // Function to handle the click event and navigate to "/Admin/AddBrand"
   const handleAddBrandClick = () => {
@@ -38,10 +77,11 @@ const Brand = () => {
     },
     {
       title: 'Number of Cars',
-      dataIndex: 'cars',
-      key: 'cars',
+      dataIndex: 'carCount', // Update from 'cars' to 'carCount'
+      key: 'carCount',
     },
   ];
+  
 
   return (
     <div className="kaiadmin">
