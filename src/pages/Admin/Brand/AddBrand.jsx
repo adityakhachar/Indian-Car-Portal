@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Button, Form, Input, Upload, message, Modal, Radio } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
+import { useDispatch } from 'react-redux'; // Import useDispatch hook
+import { addBrand } from '../../../actions/index.js'; // Import addBrand action from your brand slice
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 
@@ -10,6 +12,7 @@ const AddBrand = () => {
   const [previewVisible, setPreviewVisible] = useState(false);
   const [previewImage, setPreviewImage] = useState('');
   const [imageSource, setImageSource] = useState('link');
+  const dispatch = useDispatch(); // Initialize dispatch hook
 
   const handlePreview = async file => {
     if (!file.url && !file.preview) {
@@ -30,51 +33,23 @@ const AddBrand = () => {
 
   const handleCancel = () => setPreviewVisible(false);
 
-  const onFinish = async values => {
-    try {
-      // Extract name and image from the form values
-      const { name, imageLink } = values;
+  const onFinish = values => {
+    const updatedValues = { ...values, imageLink: imageUrl };
+    console.log('Updated Form Values:', updatedValues);
+    // Log the imageUrl before submitting the form
+    // console.log('Image URL:', imageUrl);
+    // console.log(values);
   
-      // Create a payload object with the extracted data
-      const payload = {
-        name: name,
-        image: imageLink ? imageLink : imageUrl // Use imageLink if available, otherwise use imageUrl
-      };
-  
-      // Make a POST request to the backend API to create a new brand
-      const response = await fetch("http://localhost:5000/api/brands", {
-        method: "POST",
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-      });
-  
-      // Parse the response data
-      const data = await response.json();
-  
-      // Check if the response is successful
-      if (!response.ok) {
-        // Handle different error scenarios...
-        // (Same error handling logic as before)
-      }
-  
-      // Log the response data
-      console.log('Brand created:', data);
-  
-      // Show success message to the user
+    // Dispatch the addBrand action with the form values
+    dispatch(addBrand(updatedValues))
+    .then(() => {
       message.success('Brand created successfully!');
-    } catch (error) {
-      // If an error occurs, log the error and show error message to the user
+    })
+    .catch(error => {
       console.error('Error creating brand:', error);
       message.error('Failed to create brand. Please try again later.');
-    }
+    });
   };
-  
-
-
-  
-
   
 
   const normFile = e => {

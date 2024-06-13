@@ -1,62 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Table } from "antd";
+import React, { useEffect } from 'react';
+import { Button, Table, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
+import { fetchBrands } from '../../../actions/index.js'; // Import fetchBrands action creator
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 
 const Brand = () => {
-  const [loading, setLoading] = useState(false);
-  const [brands, setBrands] = useState([]);
+  const dispatch = useDispatch(); // Initialize useDispatch hook
   const navigate = useNavigate();
+  const { brands, loading, error } = useSelector(state => state.brand); // Get brands and loading state from Redux store
 
-useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        setLoading(true);
-        const response = await fetch("http://localhost:5000/api/brands", {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        });
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-        // console.log({data});
-        const data = await response.json();
-        console.log(data);
-
-        // Iterate through each brand to fetch the car count
-        const brandsWithCarCount = await Promise.all(data.map(async (brand) => {
-          const carCountResponse = await fetch(`http://localhost:5000/api/vehicles/brands/${brand._id}/cars`, {
-            method: "GET",
-            headers: {
-              'Content-Type': 'application/json'
-            }
-          });
-
-          if (!carCountResponse.ok) {
-            throw new Error(`HTTP error! Status: ${carCountResponse.status}`);
-          }
-
-          const carCountData = await carCountResponse.json();
-          console.log(carCountData);
-          return { ...brand, carCount: carCountData.vehicleCount };
-        }));
-
-        setBrands(brandsWithCarCount);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error loading brand data:', error);
-        setLoading(false);
-        // Handle error appropriately, such as setting an error state or displaying a message to the user
-      }
-    };
-
-    fetchBrands();
-  }, []);
-
+  useEffect(() => {
+    // Dispatch fetchBrands action on component mount
+    dispatch(fetchBrands());
+  }, [dispatch]);
 
   // Function to handle the click event and navigate to "/Admin/AddBrand"
   const handleAddBrandClick = () => {
@@ -77,7 +35,7 @@ useEffect(() => {
     },
     {
       title: 'Number of Cars',
-      dataIndex: 'carCount', // Update from 'cars' to 'carCount'
+      dataIndex: 'carCount', // Update dataIndex to match the key used in the brands array
       key: 'carCount',
     },
   ];
@@ -92,12 +50,19 @@ useEffect(() => {
           <Button type="primary" onClick={handleAddBrandClick}>Add Brand</Button>
         </div>
         <div style={{ margin: '20px auto', maxWidth: '800px' }}>
-          <Table
-            loading={loading}
-            columns={columns}
-            dataSource={brands}
-            pagination={false}
-          />
+        {loading ? ( // Display a spinner while loading
+  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+    <Spin size="large" />
+  </div>
+) : (
+            <Table
+              loading={loading}
+              columns={columns}
+              dataSource={brands}
+              pagination={false}
+            />
+          )}
+          {error && <div>Error: {error}</div>} {/* Display error message if there's an error */}
         </div>
       </div>
     </div>
