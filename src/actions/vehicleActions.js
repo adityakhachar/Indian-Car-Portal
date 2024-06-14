@@ -179,9 +179,58 @@ export const addVehicle = (vehicleData) => {
     dispatch(addVehicleRequest());
 
     try {
-      const { name, imageLink } = vehicleData;
-      const payload = { name, image: imageLink };
+      // Destructure vehicleData with default values for optional fields
+      const {
+        category_id,
+        brand_id,
+        name,
+        images,
+        vehicle_type, // Assuming it is a single string and not an array
+        transmission,
+        engine_size,
+        overview,
+        variants,
+        city_price,
+        colors
+      } = vehicleData;
 
+      // Validate required fields are present
+      if (!category_id || !brand_id || !name || !images || !vehicle_type || !transmission || !engine_size || !overview || !variants || !city_price || !colors) {
+        throw new Error('Incomplete vehicle data');
+      }
+
+      // Check for empty arrays or missing data within arrays
+      if (images.length === 0 || transmission.length === 0 || variants.length === 0 || city_price.length === 0 || colors.length === 0) {
+        throw new Error('Incomplete vehicle data');
+      }
+
+      // Format payload according to backend API requirements
+      const payload = {
+        category_id,
+        brand_id,
+        name,
+        images: images.map(img => img.url), // Ensure images is an array and map to extract URLs
+        vehicle_type: [vehicle_type], // Assuming vehicleType should be an array
+        transmission: Array.isArray(transmission) ? transmission : [transmission], // Ensure transmission is an array
+        engine_size,
+        overview,
+        variants: variants.map(variant => ({
+          name: variant.name,
+          engine_size: variant.engine_size,
+          transmission_type: Array.isArray(variant.transmission_type) ? variant.transmission_type : [variant.transmission_type], // Ensure transmission_type is an array
+          price: variant.price
+        })),
+        city_price: city_price.map(cityPrice => ({
+          name: cityPrice.name,
+          price: cityPrice.price
+        })),
+        colors: colors.map(color => ({
+          name: color.name,
+          image_url: color.image_url
+        }))
+      };
+
+      // Make POST request to backend API
       const response = await fetch("http://localhost:5000/api/vehicles", {
         method: "POST",
         headers: {
@@ -190,17 +239,30 @@ export const addVehicle = (vehicleData) => {
         body: JSON.stringify(payload)
       });
 
-      if (!response.ok) {
+      // Handle different HTTP status codes
+      if (response.status === 201) { // HTTP status 201 Created
+        const data = await response.json();
+        dispatch(addVehicleSuccess(data));
+        alert("Vehicle added successfully");
+      } else if (response.status === 400) { // HTTP status 400 Bad Request
+        const errorMessage = await response.json(); // Parse the JSON error message from response
+        throw new Error(`Bad Request: ${errorMessage.message || 'Unknown error'}`); // Extract error message from server response
+      } else if (response.status === 404) { // HTTP status 404 Not Found
+        throw new Error("API endpoint not found");
+      } else { // Handle other HTTP status codes
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
-      const data = await response.json();
-      dispatch(addVehicleSuccess(data));
     } catch (error) {
+      // Catch any errors thrown during fetch or processing the response
+      console.error("Error adding vehicle:", error.message);
       dispatch(addVehicleFailure(error.message));
+      alert("Failed to add vehicle: " + error.message);
     }
   };
 };
+
+
 
 // Action creator for adding a new brand
 export const addBrand = (brandData) => {
