@@ -156,19 +156,18 @@ const AddVehicles = () => {
       brand,
       category,
       name,
-      imageUrl,
       vehicleType,
       transmission,
       engineSize,
       overview,
-      variants, // Ensure this is properly structured
+      variants,
       cityPrices,
       colors
     } = values;
-  
+
     // Format transmission as an array if it's a single value
     const formattedTransmission = Array.isArray(transmission) ? transmission : [transmission];
-  
+
     // Format variants array correctly
     const formattedVariants = variants.map(variant => ({
       name: variant.name,
@@ -176,13 +175,13 @@ const AddVehicles = () => {
       transmission_type: Array.isArray(variant.transmissionType) ? variant.transmissionType : [variant.transmissionType || ''], // Ensure transmission_type is an array and not undefined
       price: variant.price
     }));
-  
+
     // Prepare the data object to send to the server
     const data = {
       category_id: category,
       brand_id: brand,
       name,
-      images: [{ url: imageUrl }], // Assuming imageUrl is a string for a single image
+      images: images.map(img => ({ url: img.url })), // Include all images from state
       vehicle_type: vehicleType,
       transmission: formattedTransmission,
       engine_size: engineSize,
@@ -191,12 +190,15 @@ const AddVehicles = () => {
       city_price: cityPrices.map(({ city, price }) => ({ name: city, price })),
       colors,
     };
-  
+
     console.log("Data to be sent:", data); // Log data to inspect before sending
-  
+
     // Dispatch action to add vehicle
     dispatch(addVehicle(data));
   };
+
+
+
   
   return (
     <div className="kaiadmin" style={{ display: "flex", justifyContent: "center" }}>

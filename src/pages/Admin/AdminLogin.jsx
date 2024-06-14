@@ -20,7 +20,10 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // handle successful login (e.g., redirect, store token, etc.)
+        // Store authToken in localStorage
+        localStorage.setItem('authToken', data.authToken);
+        
+        // handle successful login (e.g., redirect)
         alert("Login Success!!");
         navigate('/');
       } else {

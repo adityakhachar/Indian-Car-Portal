@@ -9,7 +9,7 @@ const brandRoutes = require('./routes/brandRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const vehicleRoutes = require('./routes/vehicleRoutes');
 const cityPriceRoutes = require('./routes/cityPriceRoutes');
-
+const adminRoutes = require('./routes/admin');
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -30,6 +30,7 @@ app.use('/api/brands', brandRoutes);
 app.use('/api/categories', categoryRoutes); // Make sure this line is correct
 app.use('/api/vehicles', vehicleRoutes);
 app.use('/api/cityprices', cityPriceRoutes);
+app.use('/api/admin',adminRoutes)
 
 // Start server
 app.listen(port, () => {

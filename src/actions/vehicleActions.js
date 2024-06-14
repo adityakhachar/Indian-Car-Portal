@@ -1,5 +1,5 @@
 // src/Admin/redux/Actions/vehicleActions.js
-
+import { useNavigate } from "react-router-dom";
 // Define action types for vehicles
 export const FETCH_VEHICLES_REQUEST = 'FETCH_VEHICLES_REQUEST';
 export const FETCH_VEHICLES_SUCCESS = 'FETCH_VEHICLES_SUCCESS';
@@ -244,6 +244,8 @@ export const addVehicle = (vehicleData) => {
         const data = await response.json();
         dispatch(addVehicleSuccess(data));
         alert("Vehicle added successfully");
+        let navigate = useNavigate();
+        navigate('/Admin/Vehicles');
       } else if (response.status === 400) { // HTTP status 400 Bad Request
         const errorMessage = await response.json(); // Parse the JSON error message from response
         throw new Error(`Bad Request: ${errorMessage.message || 'Unknown error'}`); // Extract error message from server response
