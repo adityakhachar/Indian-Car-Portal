@@ -43,64 +43,63 @@ export const fetchBrands = () => {
     dispatch(fetchBrandsRequest()); // Dispatch the request action
 
     try {
-      const response = await fetch("http://localhost:5000/api/brands");
-      const data = await response.json(); // Parse the response data
-
-      // Fetch car count for each brand
-      const brandsWithCarCount = await Promise.all(data.map(async (brand) => {
-        const carCountResponse = await fetch(`http://localhost:5000/api/vehicles/brands/${brand._id}/cars`, {
-          method: "GET",
-          headers: {
-            'Content-Type': 'application/json'
+        const response = await fetch("http://localhost:5000/api/brands");
+        const data = await response.json(); // Parse the response data
+  
+        // Fetch car count for each brand
+        const brandsWithCarCount = await Promise.all(data.map(async (brand) => {
+          const carCountResponse = await fetch(`http://localhost:5000/api/vehicles/brands/${brand._id}/cars`, {
+            method: "GET",
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          });
+  
+          if (!carCountResponse.ok) {
+            throw new Error(`HTTP error! Status: ${carCountResponse.status}`);
           }
-        });
-
-        if (!carCountResponse.ok) {
-          throw new Error(`HTTP error! Status: ${carCountResponse.status}`);
-        }
-
-        const carCountData = await carCountResponse.json();
-        return { ...brand, carCount: carCountData.vehicleCount };
-      }));
-
-      // Dispatch the success action with the received data
-      dispatch(fetchBrandsSuccess(brandsWithCarCount));
-    } catch (error) {
-      // Dispatch the failure action with the error message
-      dispatch(fetchBrandsFailure(error.message));
-    }
+  
+          const carCountData = await carCountResponse.json();
+          return { ...brand, carCount: carCountData.vehicleCount };
+        }));
+  
+        // Dispatch the success action with the received data
+        dispatch(fetchBrandsSuccess(brandsWithCarCount));
+      } catch (error) {
+        // Dispatch the failure action with the error message
+        dispatch(fetchBrandsFailure(error.message));
+      }
   };
 };
 
 // Action creator for adding a new brand
 export const addBrand = (brandData) => {
-    return async (dispatch) => {
-      dispatch(addBrandRequest()); // Dispatch the request action
-  
-      try {
-        const { name, imageLink } = brandData; // Destructure name and imageLink from brandData
-        const payload = { name, image: imageLink }; // Ensure payload contains name and imageLink
-  
-        const response = await fetch("http://localhost:5000/api/brands", {
-          method: "POST",
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-  
-        if (!response.ok) {
-          throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-  
-        const data = await response.json(); // Parse the response data
-  
-        // Dispatch the success action with the received data
-        dispatch(addBrandSuccess(data));
-      } catch (error) {
-        // Dispatch the failure action with the error message
-        dispatch(addBrandFailure(error.message));
+  return async (dispatch) => {
+    dispatch(addBrandRequest()); // Dispatch the request action
+
+    try {
+      const { name, imageLink } = brandData; // Destructure name and imageLink from brandData
+      const payload = { name, image: imageLink }; // Ensure payload contains name and imageLink
+
+      const response = await fetch("http://localhost:5000/api/brands", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
-    };
+
+      const data = await response.json(); // Parse the response data
+
+      // Dispatch the success action with the received data
+      dispatch(addBrandSuccess(data));
+    } catch (error) {
+      // Dispatch the failure action with the error message
+      dispatch(addBrandFailure(error.message));
+    }
   };
-  
+};

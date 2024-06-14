@@ -4,55 +4,95 @@ import { useNavigate } from "react-router-dom";
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchVehicles } from '../../../actions/vehicleActions';
+import { fetchVehicles, fetchBrands } from '../../../actions/vehicleActions.js';
 
 const { Option } = Select;
 
 const Vehicle = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { vehicles, loading, error } = useSelector(state => state.vehicle);
-  const [brands, setBrands] = useState([]);
+  const { vehicles, loading, error } = useSelector(state => ({
+    vehicles: state.vehicle.vehicles,
+    loading: state.vehicle.loading || state.brand.loading,
+    error: state.vehicle.error || state.brand.error
+  }));
+
+  const brands = useSelector((state) => state.brand.brands);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [selectedCarType, setSelectedCarType] = useState(null);
 
   useEffect(() => {
     dispatch(fetchVehicles());
+    dispatch(fetchBrands());
   }, [dispatch]);
 
-  // Function to handle the click event and navigate to "/Admin/AddVehicle"
   const handleAddVehicleClick = () => {
     navigate("/Admin/AddVehicle");
   };
 
-  // Extract unique brands from vehicles data
-  useEffect(() => {
-    const uniqueBrands = [...new Set(vehicles.map(vehicle => vehicle.brand))];
-    setBrands(uniqueBrands);
-  }, [vehicles]);
+  const uniqueBrands = brands.map(brand => brand.name);
 
   const columns = [
     {
-      title: 'Vehicle Name',
+      title: 'Vehicle Image',
+      dataIndex: 'images',
+      render: (images) => (
+        <img src={images[0]} alt="vehicle" style={{ width: '100px' }} />
+      ),
+    },
+    {
+      title: 'Brand',
+      dataIndex: 'brand_id',
+      render: (brand_id) => {
+        const foundBrand = brands.find(brand => brand._id === brand_id);
+        return foundBrand ? foundBrand.name : 'Unknown';
+      },
+    },
+    {
+      title: 'Model',
       dataIndex: 'name',
       key: 'name',
     },
     {
-      title: 'Brand',
-      dataIndex: 'brand',
-      key: 'brand',
+      title: 'Fuel Type',
+      dataIndex: 'vehicle_type',
+      render: (vehicle_type) => {
+        const fuelTypeAbbreviations = {
+          P: 'Petrol',
+          D: 'Diesel',
+          C: 'CNG',
+          A: 'Automatic',
+          M: 'Manual',
+          I: 'IMT',
+        };
+        return vehicle_type
+          .map((type) => fuelTypeAbbreviations[type])
+          .join(', ');
+      },
+    },
+    {
+      title: 'Transmission',
+      dataIndex: 'transmission',
+      render: (transmission) => {
+        const transmissionAbbreviations = {
+          A: 'Automatic',
+          M: 'Manual',
+          I: 'IMT',
+        };
+        return transmission
+          .map((type) => transmissionAbbreviations[type])
+          .join(', ');
+      },
     },
     {
       title: 'Price',
-      dataIndex: 'price',
-      key: 'price',
-    }
+      dataIndex: 'variants',
+      render: (variants) => variants[0].price,
+    },
   ];
 
-  // Convert vehicles object to array
   const vehiclesArray = Object.values(vehicles);
 
-  // Filter vehicles based on selected brand and car type
   const filteredVehicles = vehiclesArray.filter(vehicle => {
     if (selectedBrand && selectedCarType) {
       return vehicle.brand === selectedBrand && vehicle.carType === selectedCarType;
@@ -64,20 +104,20 @@ const Vehicle = () => {
     return true;
   });
 
-  // Extract name, brand, and price for display
   const dataForDisplay = filteredVehicles.map(vehicle => ({
-    key: vehicle._id, // Assuming _id is unique for each vehicle
+    key: vehicle._id,
     name: vehicle.name,
-    brand: vehicle.brand,
-    price: vehicle.price
+    brand_id: vehicle.brand_id,
+    images: vehicle.images,
+    vehicle_type: vehicle.vehicle_type,
+    transmission: vehicle.transmission,
+    variants: vehicle.variants,
   }));
 
-  // Function to handle brand select change
   const handleBrandChange = value => {
     setSelectedBrand(value);
   };
 
-  // Function to handle car type select change
   const handleCarTypeChange = value => {
     setSelectedCarType(value);
   };
@@ -92,7 +132,7 @@ const Vehicle = () => {
         </div>
         <div style={{ margin: '20px auto', maxWidth: '800px' }}>
           <Select placeholder="Select Brand" style={{ width: 200, marginBottom: '10px' }} onChange={handleBrandChange}>
-            {brands.map(brand => (
+            {uniqueBrands.map(brand => (
               <Option key={brand} value={brand}>{brand}</Option>
             ))}
           </Select>
@@ -115,5 +155,4 @@ const Vehicle = () => {
     </div>
   );
 };
-
 export default Vehicle;

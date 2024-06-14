@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Button, Table, Spin } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
-import { fetchBrands } from '../../../actions/index.js'; // Import fetchBrands action creator
+import { fetchBrands } from '../../../actions/brandActions.js'; // Import fetchBrands action creator
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 

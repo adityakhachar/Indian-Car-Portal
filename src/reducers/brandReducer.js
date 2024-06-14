@@ -1,11 +1,10 @@
-// reducers/brandReducer.js
 import {
     FETCH_BRANDS_REQUEST,
     FETCH_BRANDS_SUCCESS,
     FETCH_BRANDS_FAILURE,
     ADD_BRAND_REQUEST,
     ADD_BRAND_SUCCESS,
-    ADD_BRAND_FAILURE
+    ADD_BRAND_FAILURE,
   } from '../actions'; // Import action types
   
   // Initial state

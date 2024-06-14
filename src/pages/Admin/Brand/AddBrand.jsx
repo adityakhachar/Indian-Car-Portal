@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Button, Form, Input, Upload, message, Modal, Radio } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import { useDispatch } from 'react-redux'; // Import useDispatch hook
-import { addBrand } from '../../../actions/index.js'; // Import addBrand action from your brand slice
+import { addBrand } from '../../../actions/brandActions.js'; // Import addBrand action from your brand slice
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 
@@ -45,6 +45,8 @@ const AddBrand = () => {
     .then(() => {
       message.success('Brand created successfully!');
     })
+
+ 
     .catch(error => {
       console.error('Error creating brand:', error);
       message.error('Failed to create brand. Please try again later.');
