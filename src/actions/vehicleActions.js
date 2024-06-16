@@ -21,6 +21,48 @@ export const FETCH_CATEGORIES_REQUEST = 'FETCH_CATEGORIES_REQUEST';
 export const FETCH_CATEGORIES_SUCCESS = 'FETCH_CATEGORIES_SUCCESS';
 export const FETCH_CATEGORIES_FAILURE = 'FETCH_CATEGORIES_FAILURE';
 
+
+export const DELETE_VEHICLE_REQUEST = 'DELETE_VEHICLE_REQUEST';
+export const DELETE_VEHICLE_SUCCESS = 'DELETE_VEHICLE_SUCCESS';
+export const DELETE_VEHICLE_FAILURE = 'DELETE_VEHICLE_FAILURE';
+// Action creators for deleting a vehicle
+export const deleteVehicleRequest = () => ({
+  type: DELETE_VEHICLE_REQUEST
+});
+
+export const deleteVehicleSuccess = (vehicleId) => ({
+  type: DELETE_VEHICLE_SUCCESS,
+  payload: vehicleId
+});
+
+export const deleteVehicleFailure = (error) => ({
+  type: DELETE_VEHICLE_FAILURE,
+  payload: error
+});
+
+export const deleteVehicle = (vehicleId) => {
+  return async (dispatch) => {
+    dispatch(deleteVehicleRequest());
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/vehicles/${vehicleId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      dispatch(deleteVehicleSuccess(vehicleId));
+    } catch (error) {
+      dispatch(deleteVehicleFailure(error.message));
+    }
+  };
+};
+
 // Action creators for fetching vehicles
 export const fetchVehiclesRequest = () => ({
   type: FETCH_VEHICLES_REQUEST

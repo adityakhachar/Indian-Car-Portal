@@ -13,7 +13,8 @@ import {
     fetchBrandsFailure,
     addBrandRequest,
     addBrandSuccess,
-    addBrandFailure
+    addBrandFailure,
+    
   } from './brandActions';
   
   // Importing action types and action creators from vehicleActions.js
@@ -24,29 +25,40 @@ import {
     ADD_VEHICLE_REQUEST,
     ADD_VEHICLE_SUCCESS,
     ADD_VEHICLE_FAILURE,
+    DELETE_VEHICLE_REQUEST,
+    DELETE_VEHICLE_SUCCESS,
+    DELETE_VEHICLE_FAILURE,
     fetchVehiclesRequest,
     fetchVehiclesSuccess,
     fetchVehiclesFailure,
     addVehicleRequest,
     addVehicleSuccess,
-    addVehicleFailure
+    addVehicleFailure,
+    deleteVehicleRequest,
+    deleteVehicleSuccess,
+    deleteVehicleFailure
   } from './vehicleActions';
   
   // Exporting action types from both brandActions.js and vehicleActions.js
-  export {
-    FETCH_BRANDS_REQUEST,
-    FETCH_BRANDS_SUCCESS,
-    FETCH_BRANDS_FAILURE,
-    ADD_BRAND_REQUEST,
-    ADD_BRAND_SUCCESS,
-    ADD_BRAND_FAILURE,
-    FETCH_VEHICLES_REQUEST,
-    FETCH_VEHICLES_SUCCESS,
-    FETCH_VEHICLES_FAILURE,
-    ADD_VEHICLE_REQUEST,
-    ADD_VEHICLE_SUCCESS,
-    ADD_VEHICLE_FAILURE
-  };
+// Exporting action types from both brandActions.js and vehicleActions.js
+export {
+  FETCH_BRANDS_REQUEST,
+  FETCH_BRANDS_SUCCESS,
+  FETCH_BRANDS_FAILURE,
+  ADD_BRAND_REQUEST,
+  ADD_BRAND_SUCCESS,
+  ADD_BRAND_FAILURE,
+  FETCH_VEHICLES_REQUEST,
+  FETCH_VEHICLES_SUCCESS,
+  FETCH_VEHICLES_FAILURE,
+  ADD_VEHICLE_REQUEST,
+  ADD_VEHICLE_SUCCESS,
+  ADD_VEHICLE_FAILURE,
+  DELETE_VEHICLE_REQUEST,
+  DELETE_VEHICLE_SUCCESS,
+  DELETE_VEHICLE_FAILURE
+};
+
   
   // Exporting action creators from both brandActions.js and vehicleActions.js
   export {
@@ -61,7 +73,10 @@ import {
     fetchVehiclesFailure,
     addVehicleRequest,
     addVehicleSuccess,
-    addVehicleFailure
+    addVehicleFailure,
+    deleteVehicleRequest,
+    deleteVehicleSuccess,
+    deleteVehicleFailure
   };
   
   // src/Admin/redux/Actions/index.js

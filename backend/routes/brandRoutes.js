@@ -8,11 +8,10 @@ router.post('/', brandController.createBrand);
 // Get all brands
 router.get('/', brandController.getBrands);
 
-// Get number of cars by brand ID
-
 // Get brand by ID
-// router.get('/:brandId', brandController.getBrandCarCount);
+router.get('/:brandId', brandController.getBrandById);
 
-
+// Delete a brand by ID
+router.delete('/:brandId', brandController.deleteBrand);
 
 module.exports = router;

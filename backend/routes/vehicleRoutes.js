@@ -10,4 +10,7 @@ router.get('/', vehicleController.getVehicles);
 
 // Get count of cars for each brand
 router.get('/brands/:id/cars', vehicleController.getBrandCarCount);
+
+router.delete('/:vehicleId', vehicleController.deleteVehicle);
+
 module.exports = router;

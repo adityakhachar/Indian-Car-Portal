@@ -1,24 +1,32 @@
 import React, { useEffect } from 'react';
-import { Button, Table, Spin } from "antd";
+import { Button, Table, Spin, Popconfirm, message } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from 'react-redux'; // Import useDispatch and useSelector
-import { fetchBrands } from '../../../actions/brandActions.js'; // Import fetchBrands action creator
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchBrands, deleteBrand } from '../../../actions/brandActions';
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 
 const Brand = () => {
-  const dispatch = useDispatch(); // Initialize useDispatch hook
+  const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { brands, loading, error } = useSelector(state => state.brand); // Get brands and loading state from Redux store
+  const { brands, loading, error } = useSelector(state => state.brand);
 
   useEffect(() => {
-    // Dispatch fetchBrands action on component mount
     dispatch(fetchBrands());
   }, [dispatch]);
 
-  // Function to handle the click event and navigate to "/Admin/AddBrand"
   const handleAddBrandClick = () => {
     navigate("/Admin/AddBrand");
+  };
+
+  const handleDeleteBrand = (brandId) => {
+    dispatch(deleteBrand(brandId))
+      .then(() => {
+        message.success('Brand deleted successfully');
+      })
+      .catch((error) => {
+        message.error(`Failed to delete brand: ${error.message}`);
+      });
   };
 
   const columns = [
@@ -26,20 +34,38 @@ const Brand = () => {
       title: 'Brand Image',
       dataIndex: 'image',
       key: 'image',
-      render: (image) => <img src={image} alt="Brand" style={{ width: '50px', borderRadius: '50%' }} />
+      align: 'left',
+      render: (image) => <img src={image} alt="Brand" style={{ width: '50px', borderRadius: '50%', textAlign: 'center' }} />
     },
     {
       title: 'Brand Name',
       dataIndex: 'name',
       key: 'name',
+      align: 'center',
+      render: (text) => <div style={{ textAlign: 'center' }}>{text}</div>
     },
     {
       title: 'Number of Cars',
-      dataIndex: 'carCount', // Update dataIndex to match the key used in the brands array
+      dataIndex: 'carCount',
       key: 'carCount',
+      align: 'center',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      align: 'center',
+      render: (text, record) => (
+        <Popconfirm
+          title="Are you sure delete this brand?"
+          onConfirm={() => handleDeleteBrand(record._id)}
+          okText="Yes"
+          cancelText="No"
+        >
+          <Button type="danger" style={{ color: 'red' }}>Delete</Button>
+        </Popconfirm>
+      ),
     },
   ];
-  
 
   return (
     <div className="kaiadmin">
@@ -50,19 +76,20 @@ const Brand = () => {
           <Button type="primary" onClick={handleAddBrandClick}>Add Brand</Button>
         </div>
         <div style={{ margin: '20px auto', maxWidth: '800px' }}>
-        {loading ? ( // Display a spinner while loading
-  <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
-    <Spin size="large" />
-  </div>
-) : (
+          {loading ? (
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '200px' }}>
+              <Spin size="large" />
+            </div>
+          ) : (
             <Table
               loading={loading}
               columns={columns}
               dataSource={brands}
               pagination={false}
+              rowClassName={() => 'antd-table-row'}
             />
           )}
-          {error && <div>Error: {error}</div>} {/* Display error message if there's an error */}
+          {error && <div>Error: {error}</div>}
         </div>
       </div>
     </div>

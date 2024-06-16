@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table, Select } from "antd";
+import { Button, Table, Select, Modal, message } from "antd";
 import { useNavigate } from "react-router-dom";
 import SideMenu from "../../../components/AdminLayout/SideBar.jsx";
 import AdminHeader from '../../../components/AdminLayout/AdminHeader.jsx';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchVehicles, fetchBrands, fetchCategories } from '../../../actions';
+import { fetchVehicles, fetchBrands, fetchCategories, deleteVehicle } from '../../../actions/vehicleActions.js';
 
 const { Option } = Select;
 
 const Vehicle = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const { vehicles, loading, error } = useSelector(state => ({
     vehicles: state.vehicle.vehicles,
     loading: state.vehicle.loading || state.brand.loading || state.category.loading,
@@ -92,8 +93,15 @@ const Vehicle = () => {
       dataIndex: 'variants',
       render: (variants) => variants[0].price,
     },
+    {
+      title: 'Actions',
+      dataIndex: 'actions',
+      render: (_, record) => (
+        <Button type="danger" style={{ color: 'red' }} onClick={() => handleDelete(record.key)}>Delete</Button>
+      ),
+    },
   ];
-
+  
   const vehiclesArray = Object.values(vehicles);
 
   const filteredVehicles = vehiclesArray.filter(vehicle => {
@@ -123,6 +131,25 @@ const Vehicle = () => {
 
   const handleCategoryChange = value => {
     setSelectedCategory(value);
+  };
+
+  const handleDelete = (vehicleId) => {
+    Modal.confirm({
+      title: 'Confirm Delete',
+      content: 'Are you sure you want to delete this vehicle?',
+      onOk() {
+        dispatch(deleteVehicle(vehicleId))
+          .then(() => {
+            message.success('Vehicle deleted successfully');
+          })
+          .catch((error) => {
+            message.error(`Failed to delete vehicle: ${error.message}`);
+          });
+      },
+      onCancel() {
+        console.log('Cancel');
+      },
+    });
   };
 
   return (

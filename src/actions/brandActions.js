@@ -7,7 +7,49 @@ export const FETCH_BRANDS_FAILURE = 'FETCH_BRANDS_FAILURE';
 export const ADD_BRAND_REQUEST = 'ADD_BRAND_REQUEST';
 export const ADD_BRAND_SUCCESS = 'ADD_BRAND_SUCCESS';
 export const ADD_BRAND_FAILURE = 'ADD_BRAND_FAILURE';
+export const DELETE_BRAND_REQUEST = 'DELETE_BRAND_REQUEST';
+export const DELETE_BRAND_SUCCESS = 'DELETE_BRAND_SUCCESS';
+export const DELETE_BRAND_FAILURE = 'DELETE_BRAND_FAILURE';
 
+export const deleteBrandRequest = () => ({
+  type: DELETE_BRAND_REQUEST
+});
+
+export const deleteBrandSuccess = (brandId) => ({
+  type: DELETE_BRAND_SUCCESS,
+  payload: brandId
+});
+
+export const deleteBrandFailure = (error) => ({
+  type: DELETE_BRAND_FAILURE,
+  payload: error
+});
+
+// Action creator for deleting a brand
+export const deleteBrand = (brandId) => {
+  return async (dispatch) => {
+    dispatch(deleteBrandRequest()); // Dispatch the request action
+
+    try {
+      const response = await fetch(`http://localhost:5000/api/brands/${brandId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+
+      // Dispatch the success action with the deleted brandId
+      dispatch(deleteBrandSuccess(brandId));
+    } catch (error) {
+      // Dispatch the failure action with the error message
+      dispatch(deleteBrandFailure(error.message));
+    }
+  };
+};
 // Action creators for fetching brands
 export const fetchBrandsRequest = () => ({
   type: FETCH_BRANDS_REQUEST
