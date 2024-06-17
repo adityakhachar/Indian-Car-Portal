@@ -24,7 +24,7 @@ const Register = () => {
 
       if (response.status === 201) {
         alert("Registration Success!!");
-        navigate('/admin/login');
+        navigate('/');
       } else if (response.status === 400 && data.error === "Passwords do not match") {
         alert("Passwords do not match with Confirm Password");
       } else if (response.status === 400 && data.error === "Admin already exists") {
@@ -123,7 +123,7 @@ const Register = () => {
             </button>
           </div>
           <p style={{ fontSize: '0.875rem', marginTop: '1rem', textAlign: 'center' }}>
-            Already have an account? <a href="/admin/login" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Login here</a>
+            Already have an account? <a href="/" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Login here</a>
           </p>
         </form>
       </div>

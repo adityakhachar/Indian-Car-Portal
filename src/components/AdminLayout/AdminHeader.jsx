@@ -11,7 +11,7 @@ const AdminHeader = () => {
         const token = localStorage.getItem('authToken');
         if (!token) {
           throw new Error('No authToken found');
-          navigate('/admin/login'); // Redirect to login if authToken is missing
+          navigate('/'); // Redirect to login if authToken is missing
         }
     
         const response = await fetch('http://localhost:5000/api/admin/auth/protected-route', {
@@ -39,7 +39,7 @@ const AdminHeader = () => {
 
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // Clear authToken from localStorage
-    navigate('/admin/login'); // Navigate to the login page
+    navigate('/'); // Navigate to the login page
   };
 
   return (

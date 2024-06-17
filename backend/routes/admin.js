@@ -6,6 +6,10 @@ const jwt = require('jsonwebtoken');
 const verifyToken = require('../VerifyToken');
 const jwtSecret = "MyNameIsAdityaKhachar";
 
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
+require('dotenv').config();
+
 router.post('/register', async (req, res) => {
   try {
     const { name, email, password, cpassword } = req.body;
@@ -84,4 +88,51 @@ router.get('/auth/protected-route', verifyToken, async (req, res) => {
   res.json({ message: 'Protected Admin route accessed successfully.', user: req.user });
 });
 
+
+router.post('/forgot-password', async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    // Generate reset token
+    const resetToken = crypto.randomBytes(20).toString('hex');
+    
+    // Find user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    // Save reset token and expiry in user document
+    user.resetPasswordToken = resetToken;
+    user.resetPasswordExpires = Date.now() + 3600000; // Token expires in 1 hour
+    await user.save();
+
+    // Send email with reset link
+    const transporter = nodemailer.createTransport({
+      service: 'SendGrid', // Use the appropriate SMTP service
+      auth: {
+        user: 'your_sendgrid_username', // Replace with your SMTP username/API key
+        pass: 'your_sendgrid_password_or_api_key' // Replace with your SMTP password/API key
+      }
+    });
+
+    const mailOptions = {
+      to: user.email,
+      from: 'your_email@example.com',
+      subject: 'Password Reset',
+      text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
+        `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
+        `http://localhost:3000/reset/${resetToken}\n\n` +
+        `If you did not request this, please ignore this email and your password will remain unchanged.\n`
+    };
+
+    await transporter.sendMail(mailOptions);
+    res.status(200).json({ message: 'Password reset email sent.' });
+
+  } catch (err) {
+    console.error('Error in forgot password:', err);
+    res.status(500).json({ message: 'Server error. Please try again later.' });
+  }
+});
 module.exports = router;

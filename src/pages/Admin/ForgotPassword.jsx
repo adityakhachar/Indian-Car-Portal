@@ -1,38 +1,34 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const AdminLogin = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:5000/api/admin/login', {
+      const response = await fetch('http://localhost:5000/api/admin/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, password })
+        body: JSON.stringify({ email })
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        // Store authToken in localStorage
-        localStorage.setItem('authToken', data.authToken);
-        
-        // handle successful login (e.g., redirect)
-        alert("Login Success!!");
-        navigate('/dashboard');
+        // handle successful request (e.g., show a message)
+        alert("Password reset link sent to your email.");
+        navigate('/');
       } else {
-        // handle login error based on response status
-        alert(data.message || "Wrong Credential!!");
+        // handle error based on response status
+        alert(data.message || "Email not found.");
       }
     } catch (error) {
       // handle fetch error
-      console.error("Error during login:", error);
+      console.error("Error during password reset:", error);
       alert("Server error. Please try again later.");
     }
   };
@@ -46,37 +42,24 @@ const AdminLogin = () => {
           </a>
         </div>
         <form onSubmit={handleSubmit} style={{ marginTop: '4.5rem', padding: '2rem', paddingRight: '2rem' }}>
-          <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#718096', marginBottom: '2rem', textAlign: 'center' }}>Login</h3>
+          <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#718096', marginBottom: '2rem', textAlign: 'center' }}>Forgot Password</h3>
           <div style={{ marginBottom: '1rem' }}>
             <input
               name="email"
-              type="text"
+              type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ backgroundColor: '#edf2f7', width: '100%', padding: '1rem', fontSize: '0.875rem', border: '1px solid transparent', transition: 'background-color 0.3s, border-color 0.3s', borderRadius: '0.375rem' }}
-              placeholder="Enter email"
-            />
-          </div>
-          <div style={{ marginBottom: '1rem' }}>
-            <input
-              name="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              style={{ backgroundColor: '#edf2f7', width: '100%', padding: '1rem', fontSize: '0.875rem', border: '1px solid transparent', transition: 'background-color 0.3s, border-color 0.3s', borderRadius: '0.375rem' }}
-              placeholder="Enter password"
+              placeholder="Enter your email"
             />
           </div>
           <div style={{ marginTop: '1rem' }}>
             <button type="submit" style={{ width: '100%', padding: '1rem', fontSize: '0.875rem', fontWeight: '600', color: '#fff', backgroundColor: '#ed8936', border: 'none', borderRadius: '0.375rem', cursor: 'pointer', transition: 'background-color 0.3s' }}>
-              Login
+              Reset Password
             </button>
           </div>
           <p style={{ fontSize: '0.875rem', marginTop: '1rem', textAlign: 'center' }}>
-            <a href="/admin/forgotpass" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Forgot Password?</a>
-          </p>
-          <p style={{ fontSize: '0.875rem', marginTop: '1rem', textAlign: 'center' }}>
-            Don't have an account? <a href="/admin/register" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Create an account</a>
+            <a href="/" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Back to Login</a>
           </p>
         </form>
       </div>
@@ -84,4 +67,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default ForgotPassword;
