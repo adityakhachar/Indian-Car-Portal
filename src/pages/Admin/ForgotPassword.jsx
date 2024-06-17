@@ -19,9 +19,11 @@ const ForgotPassword = () => {
       const data = await response.json();
 
       if (response.ok) {
+        console.log(data,"User register");
         // handle successful request (e.g., show a message)
         alert("Password reset link sent to your email.");
-        navigate('/');
+        alert(data.status);
+        // navigate('/');
       } else {
         // handle error based on response status
         alert(data.message || "Email not found.");

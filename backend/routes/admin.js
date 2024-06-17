@@ -5,12 +5,15 @@ const Admin = require("../models/Admin");
 const jwt = require('jsonwebtoken');
 const verifyToken = require('../VerifyToken');
 const jwtSecret = "MyNameIsAdityaKhachar";
-
+const app = express(); // Create an express app instance
+var nodemailer = require('nodemailer');
+app.set("view engine", "ejs"); // Set view engine to ejs
+app.use(express.urlencoded({ extended: false }));
 const crypto = require('crypto');
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 require('dotenv').config();
 
-router.post('/register', async (req, res) => {
+app.post('/register', async (req, res) => {
   try {
     const { name, email, password, cpassword } = req.body;
 
@@ -43,7 +46,7 @@ router.post('/register', async (req, res) => {
   }
 });
 
-router.post('/login', async (req, res) => {
+app.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -84,55 +87,104 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/auth/protected-route', verifyToken, async (req, res) => {
+app.get('/auth/protected-route', verifyToken, async (req, res) => {
   res.json({ message: 'Protected Admin route accessed successfully.', user: req.user });
 });
 
-
-router.post('/forgot-password', async (req, res) => {
+app.post('/forgot-password', async (req, res) => {
   const { email } = req.body;
+  try {
+    const olduser = await Admin.findOne({ email });
+    if (!olduser) {
+      return res.json({ status: "Admin not found" });
+    }
+    const secret = jwtSecret + olduser.password;
+    const token = jwt.sign({ email: olduser.email, id: olduser._id }, secret, { expiresIn: "5m" });
+    const link = `http://localhost:5000/api/admin/reset-password/${olduser._id}/${token}`;
+    var transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'adityarajcoder09@gmail.com',
+        pass: 'gvksrridgzhadfsc'
+      }
+    });
+    
+    var mailOptions = {
+      from: 'aditya.kce21@sot.pdpu.ac.in',
+      to: 'adityakhachar15@gmail.com',
+      subject: 'Reset Password',
+      text: link
+    };
+    
+    transporter.sendMail(mailOptions, function(error, info){
+      if (error) {
+        console.log(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    console.log(link);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+app.get("/reset-password/:id/:token", async (req, res) => {
+  const { id, token } = req.params;
+  console.log(req.params);
+  const oldUser = await Admin.findOne({ _id: id });
+  if (!oldUser) {
+    return res.json({ status: "Admin not found" });
+  }
+  const secret = jwtSecret + oldUser.password;
+  try {
+    console.log("verified")
+    const verify = jwt.verify(token, secret);
+    res.render("index", { email: verify.email, id, token ,status:"Not verified"});
+  } catch (error) {
+    console.error(error);
+    res.send("Not verified");
+  }
+});
+
+app.post('/reset-password/:id/:token', async (req, res) => {
+  const { id, token } = req.params;
+  const { password } = req.body;
 
   try {
-    // Generate reset token
-    const resetToken = crypto.randomBytes(20).toString('hex');
-    
-    // Find user by email
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found.' });
+    // Check if the password field is provided
+    if (!password) {
+      return res.status(400).json({ error: "Password is required" });
     }
 
-    // Save reset token and expiry in user document
-    user.resetPasswordToken = resetToken;
-    user.resetPasswordExpires = Date.now() + 3600000; // Token expires in 1 hour
-    await user.save();
+    // Find the admin by id
+    const oldUser = await Admin.findOne({ _id: id });
+    if (!oldUser) {
+      return res.json({ status: "Admin not Exists!" });
+    }
 
-    // Send email with reset link
-    const transporter = nodemailer.createTransport({
-      service: 'SendGrid', // Use the appropriate SMTP service
-      auth: {
-        user: 'your_sendgrid_username', // Replace with your SMTP username/API key
-        pass: 'your_sendgrid_password_or_api_key' // Replace with your SMTP password/API key
+    // Verify the token
+    const secret = jwtSecret + oldUser.password;
+    const verify = jwt.verify(token, secret);
+
+    // Hash the new password
+    const encryptedPassword = await bcrypt.hash(password, 10);
+    console.log("Encrypted Password:", encryptedPassword);
+
+    // Update the password in the database
+    await Admin.updateOne({ _id: id }, {
+      $set: {
+        password: encryptedPassword,
       }
     });
 
-    const mailOptions = {
-      to: user.email,
-      from: 'your_email@example.com',
-      subject: 'Password Reset',
-      text: `You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n` +
-        `Please click on the following link, or paste this into your browser to complete the process:\n\n` +
-        `http://localhost:3000/reset/${resetToken}\n\n` +
-        `If you did not request this, please ignore this email and your password will remain unchanged.\n`
-    };
+    // Respond with success message
+    res.render("index", { email: verify.email, id, token ,status:"verified"});
 
-    await transporter.sendMail(mailOptions);
-    res.status(200).json({ message: 'Password reset email sent.' });
-
-  } catch (err) {
-    console.error('Error in forgot password:', err);
-    res.status(500).json({ message: 'Server error. Please try again later.' });
+  } catch (error) {
+    console.error(error);
+    res.send("Not verified");
   }
 });
-module.exports = router;
+
+module.exports = app; // Export the express app instance

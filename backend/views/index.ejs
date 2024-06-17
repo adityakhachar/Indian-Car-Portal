@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reset Password</title>
+    <script>
+        var status=`<%- JSON.stringify(status) %>`;
+        if (JSON.parse(status) == 'verified') {
+    if (confirm("Do you want to Login?")) {
+        window.location.href = "http://localhost:3000/";
+    }
+}
+
+    </script>
+
+    <!-- Include Ant Design CSS (adjust the path as per your setup) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/antd/4.16.13/antd.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        .container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .container form {
+            display: flex;
+            flex-direction: column;
+        }
+        .container form input {
+            margin-bottom: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .container form input[type="submit"] {
+            background-color: #1890ff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .container form input[type="submit"]:hover {
+            background-color: #40a9ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Reset Password</h1>
+        <form action="" method="POST">
+            <input type="password" name="password" id="password" placeholder="New Password" required/>
+            <input type="password" name="confirm-password" id="confirm-password" placeholder="Confirm Password" required/>
+            <input type="submit" value="Submit"/>
+        </form>
+    </div>
+</body>
+</html>
