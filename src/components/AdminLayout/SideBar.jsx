@@ -8,7 +8,7 @@ const Sidebar = () => {
     <div className="kaiadmin__sidebar">
       <ul>
         <li className="active">
-          <Link to="/">
+          <Link to="/dashboard">
             <i className="fas fa-home"></i> Dashboard
           </Link>
         </li>

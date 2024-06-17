@@ -10,17 +10,17 @@ const AdminHeader = () => {
       try {
         const token = localStorage.getItem('authToken');
         if (!token) {
-          throw new Error('No authToken found');
           navigate('/'); // Redirect to login if authToken is missing
+          return; // Ensure no further code is executed
         }
-    
+
         const response = await fetch('http://localhost:5000/api/admin/auth/protected-route', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
           }
         });
-    
+
         if (response.ok) {
           const data = await response.json();
           setUsername(data.user.name); // Accessing directly from data.user.name
@@ -30,12 +30,13 @@ const AdminHeader = () => {
         }
       } catch (error) {
         console.error('Error fetching user details:', error);
-        // Handle error condition, such as logging out the user or displaying an error message
+        localStorage.removeItem('authToken'); // Optional: Clear token on error
+        navigate('/'); // Redirect to login on error
       }
     };
 
     fetchUserName();
-  }, []); // Empty dependency array ensures this effect runs once on component mount
+  }, [navigate]); // Adding navigate to dependency array
 
   const handleLogout = () => {
     localStorage.removeItem('authToken'); // Clear authToken from localStorage
@@ -59,8 +60,7 @@ const AdminHeader = () => {
       </div>
       <div className="user">
         <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" alt="User Avatar" />
-        {/* <span>Hi, {username}</span> */}
-        <span>Hi, Aditya</span>
+        <span>Hi, {username}</span>
         <button
           style={{
             backgroundColor: '#f44336',
