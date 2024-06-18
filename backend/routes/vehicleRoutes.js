@@ -13,4 +13,16 @@ router.get('/brands/:id/cars', vehicleController.getBrandCarCount);
 
 router.delete('/:vehicleId', vehicleController.deleteVehicle);
 
+
+// Get vehicles by category ID
+// Get vehicles by category ID
+router.get('/byCategory/:categoryId', async (req, res) => {
+    try {
+      const vehicles = await vehicleController.getVehiclesByCategory(req.params.categoryId);
+      res.json(vehicles);
+    } catch (error) {
+      console.error('Error fetching vehicles:', error);
+      res.status(500).json({ error: 'Failed to fetch vehicles' });
+    }
+  });
 module.exports = router;

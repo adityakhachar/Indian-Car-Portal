@@ -24,10 +24,10 @@ const Advertisement = () => {
           <h2>Sell your car at best Price</h2>
           <span>No Charges • Instant Payment • Covid Safety</span>
         </div>
-        <div className="adv-info">
+        {/* <div className="adv-info">
           <button type="submit" className="advBtn">Book your appointment</button>
           <h5 className="adv-terms"><i className="fa fa-check-square-o" aria-hidden="true"></i> Terms and Conditions apply</h5>
-        </div>
+        </div> */}
       </div>
       </div>
     </main>

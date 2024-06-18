@@ -9,6 +9,8 @@ import Vehicle from './pages/Admin/Vehicle';
 import AddVehicleForm from './pages/Admin/Vehicle/AddVehicle';
 import ForgotPassword from './pages/Admin/ForgotPassword';
 import UserDashboard from './pages/User/UserDashboard';
+import CheckOut from './pages/User/CheckOut';
+import CarIntro from './components/UserLayout/CarIntro';
 
 function App() {
   return (
@@ -26,7 +28,9 @@ function App() {
           <Route path="/Admin/forgotpass" element={<ForgotPassword/>}/>
 
 
-          <Route path="/user" element={<UserDashboard/>}/>          
+          <Route path="/user" element={<UserDashboard/>}/>  
+          <Route path="/checkOut" element={<CheckOut/>}/>   
+          <Route path="/carIntro" element={<CarIntro/>}/>          
         </Routes>
       </div>
     </Router>

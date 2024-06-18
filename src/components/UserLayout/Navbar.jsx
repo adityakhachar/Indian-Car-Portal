@@ -12,7 +12,7 @@ const Navbar = () => {
   return (
     <div>
       <nav className="navbar-container">
-        <h3 onClick={() => window.location.href = 'index.html'}>CarGuru</h3>
+        <h3 onClick={() => window.location.href = 'index.html'} >AutoGuide</h3>
         <div className="search-container">
           <input
             type="search"

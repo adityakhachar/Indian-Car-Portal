@@ -3,6 +3,7 @@ import Navbar from '../../components/UserLayout/Navbar';
 import Footer from '../../components/UserLayout/Footer';
 import '../../assets/styles/UserStyle.css'; // Import the external CSS file
 import AdvInfo from '../../components/UserLayout/AdvInfo';
+import CarPanel from '../../components/UserLayout/CarPanel.jsx'; // Import the CarPanel component
 
 const UserDashboard = () => {
   return (
@@ -19,6 +20,9 @@ const UserDashboard = () => {
         </header>
       </div>
       <AdvInfo />
+
+      <CarPanel /> {/* Add CarPanel component here */}
+      
       <div>
         {/* Other content of your application */}
         <Footer />

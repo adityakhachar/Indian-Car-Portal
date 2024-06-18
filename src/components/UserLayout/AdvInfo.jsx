@@ -3,6 +3,7 @@ import '../../assets/styles/UserStyle.css';
 
 const AdvInfo = () => {
   return (
+    <div style={{padding:'40px 5%'}}>
     <div className="adv">
       <div className="adv-logo">
         <img src="https://raw.githubusercontent.com/nandpalmohit/carsline/5f3f222fefd289d46bfaf7cd3f86cb4b25536f65/assets/adv1.svg" alt="Advertisement Logo" />
@@ -15,6 +16,7 @@ const AdvInfo = () => {
         <button type="submit" className="advBtn">Book your appointment</button>
         <h5 className="adv-terms"><i className="fa fa-check-square-o" aria-hidden="true"></i> Terms and Conditions apply</h5>
       </div>
+    </div>
     </div>
   );
 };
