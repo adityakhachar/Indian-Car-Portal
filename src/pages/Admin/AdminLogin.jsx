@@ -1,3 +1,5 @@
+// AdminLogin.js
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,18 +22,12 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store authToken in localStorage
-        localStorage.setItem('authToken', data.authToken);
-        
-        // handle successful login (e.g., redirect)
-        alert("Login Success!!");
+        localStorage.setItem('authToken', data.token); // Assuming token is returned as 'token'
         navigate('/dashboard');
       } else {
-        // handle login error based on response status
         alert(data.message || "Wrong Credential!!");
       }
     } catch (error) {
-      // handle fetch error
       console.error("Error during login:", error);
       alert("Server error. Please try again later.");
     }

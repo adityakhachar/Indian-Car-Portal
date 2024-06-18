@@ -8,6 +8,7 @@ import AddBrand from './pages/Admin/Brand/AddBrand';
 import Vehicle from './pages/Admin/Vehicle';
 import AddVehicleForm from './pages/Admin/Vehicle/AddVehicle';
 import ForgotPassword from './pages/Admin/ForgotPassword';
+import UserDashboard from './pages/User/UserDashboard';
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           <Route path="/Admin/Vehicles" element={<Vehicle/>}/>
           <Route path="/Admin/AddVehicle" element={<AddVehicleForm/>}/>
           <Route path="/Admin/forgotpass" element={<ForgotPassword/>}/>
+
+
+          <Route path="/user" element={<UserDashboard/>}/>          
         </Routes>
       </div>
     </Router>

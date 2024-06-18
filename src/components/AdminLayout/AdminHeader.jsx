@@ -1,3 +1,5 @@
+// AdminHeader.js
+
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,10 +11,12 @@ const AdminHeader = () => {
     const fetchUserName = async () => {
       try {
         const token = localStorage.getItem('authToken');
-        if (!token) {
-          navigate('/'); // Redirect to login if authToken is missing
-          return; // Ensure no further code is executed
-        }
+
+        // Check if token exists (optional: you can skip this check and rely on server response)
+        // if (!token) {
+        //   navigate('/'); // Redirect to login if authToken is missing
+        //   return;
+        // }
 
         const response = await fetch('http://localhost:5000/api/admin/auth/protected-route', {
           method: 'GET',
@@ -24,14 +28,13 @@ const AdminHeader = () => {
         if (response.ok) {
           const data = await response.json();
           setUsername(data.user.name); // Accessing directly from data.user.name
-          console.log(data);
         } else {
           throw new Error('Failed to fetch user details');
         }
       } catch (error) {
         console.error('Error fetching user details:', error);
         localStorage.removeItem('authToken'); // Optional: Clear token on error
-        navigate('/'); // Redirect to login on error
+        // navigate('/'); // Redirect to login on error
       }
     };
 
@@ -60,7 +63,7 @@ const AdminHeader = () => {
       </div>
       <div className="user">
         <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200" alt="User Avatar" />
-        <span>Hi, {username}</span>
+        <span>Hi, Aditya {username}</span>
         <button
           style={{
             backgroundColor: '#f44336',

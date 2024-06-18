@@ -8,6 +8,7 @@ const ForgotPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+        alert("check you mail");
       const response = await fetch('http://localhost:5000/api/admin/forgot-password', {
         method: 'POST',
         headers: {

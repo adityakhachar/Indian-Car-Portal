@@ -1,0 +1,196 @@
+/* UserStyle.css */
+.toggle-menu-button {
+    background-color: transparent;
+    border: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    font-size: 24px;
+    padding: 10px;
+    border-radius: 50%;
+    color: #000;
+    z-index: 10002; /* Ensure it's above other content */
+    cursor: pointer;
+  }
+  
+  .toggle-menu-button i {
+    transition: transform 0.3s ease;
+  }
+  .menu-button i {
+    font-size: 30px; /* Set the size of the icon */
+  }
+  .menu-container {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 14px;
+    overflow: hidden;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    transform: translateY(100%);
+    opacity: 0;
+    z-index: 10001; /* Ensure it's above the main content */
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  
+  .menu-container.active {
+    transform: translateY(0%);
+    opacity: 1;
+  }
+.navbar-container {
+    height: 60px;
+    padding: 0px 5%;
+    width: 100%;
+    font-weight: 500;
+    display: flex;
+    transition: 1s;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10001;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  
+  .navbar-container h3 {
+    padding: 15px 20px;
+    font-family: 'Monoton', cursive;
+    font-weight: 600;
+    color: #21618C;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  
+  .search-container {
+    position: relative;
+    margin: 8px 10% 8px 25%;
+    display: grid;
+    grid-template-columns: auto auto;
+  }
+  
+  .search-container input {
+    border: 2px solid #f2f2f2;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    padding: 10px;
+  }
+  
+  .search-container input:hover,
+  .search-container input:focus {
+    border: 2px solid #21618C;
+  }
+  
+  .search-container button {
+    background-color: #21618C;
+    border: 2px solid #21618C;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    padding: 12px;
+    color: #fff;
+    cursor: pointer;
+  }
+  
+  .menu-button {
+    background-color: transparent;
+    border: none;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 16px;
+    padding: 10px 12px;
+    border-radius: 50%;
+    color: #000;
+    cursor: pointer;
+  }
+  
+  .menu-container {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    font-weight: 500;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    font-size: 14px;
+    overflow: hidden;
+    transition: 1s;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.03);
+    z-index: 1000;
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: saturate(180%) blur(20px);
+  }
+  
+  .menu-container a {
+    color: black;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
+  }
+  
+  .menu-container a:hover,
+  .menu-container a.active {
+    color: #21618C;
+  }
+  
+  .menu-container.active {
+    height: 50px;
+  }
+
+
+  /* FooterStyle.css */
+
+footer.content {
+    background-color: #f5f5f5;
+    padding: 30px 50px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+  }
+  
+  footer.content .data h3,
+  footer.content .link h3,
+  footer.content .service h3,
+  footer.content .detail h3 {
+    color: #333;
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  footer.content .data p {
+    color: #666;
+    line-height: 1.6;
+  }
+  
+  footer.content .link a,
+  footer.content .service a,
+  footer.content .detail a {
+    color: #424242;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 8px;
+    transition: color 0.3s ease;
+  }
+  
+  footer.content .link a:hover,
+  footer.content .service a:hover,
+  footer.content .detail a:hover {
+    color: #21618C;
+  }
+  
+  footer.content .copyright {
+    color: #424242;
+    text-decoration: none;
+    margin-top: 20px;
+    font-weight: 600;
+    display: block;
+  }
+  
+  footer.content .copyright span i {
+    color: #0fbf9f;
+  }
+  
