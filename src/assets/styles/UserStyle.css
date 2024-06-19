@@ -378,31 +378,37 @@ transition: .5s;
 
 
 /*----- car pages data ------*/
-.car-banner{
-	font-family: "Yantramanav", sans-serif;
-	width: 100%;
-	margin: 30px 0px 0px 0px;
-	padding: 10px 3%;
-	border-bottom: 1px solid #ddd;
-	box-shadow: 0 0.6rem 1rem rgba(0,0,0,0.05);
+.car-banner {
+  font-family: "Yantramanav", sans-serif;
+  width: 100%;
+  margin: 30px 0px 0px 0px;
+  padding: 10px 3%;
+  border-bottom: 1px solid #ddd;
+  box-shadow: 0 0.6rem 1rem rgba(0,0,0,0.05);
 }
-.car-banner .car-intro{
-	width: 100%;
-	margin: 10px 0%;
-	display: flex;
-	flex: 1 1 auto;
-	grid-gap: 10px;
+.car-banner .car-intro {
+  width: 100%;
+  margin: 10px 0%;
+  display: flex;
+  flex: 1 1 auto;
+  grid-gap: 10px;
 }
-.car-banner .car-intro .car-show{
-	margin-top: 20px;
-	overflow: hidden;
-	width: 100%;
-	border-radius: 10px;
-	text-align: center;
+.car-banner .car-intro .car-show {
+  margin-top: 20px;
+  overflow: hidden;
+  width: 100%;
+  border-radius: 10px;
+  text-align: center;
 }
-.car-banner .car-intro .car-show img{
-	width: 100%;
-	border-radius: 10px;
+
+.car-banner .car-intro .car-show img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.slick-prev:before, .slick-next:before {
+  font-size: 20px;
+  color: #21618C !important; /* Adjust the color of the arrows */
 }
 .car-body{
 	width: 70%;

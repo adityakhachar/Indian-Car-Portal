@@ -14,6 +14,9 @@ router.get('/brands/:id/cars', vehicleController.getBrandCarCount);
 router.delete('/:vehicleId', vehicleController.deleteVehicle);
 
 
+router.get('/:vehicleId', vehicleController.getVehicleById);
+
+
 // Get vehicles by category ID
 // Get vehicles by category ID
 router.get('/byCategory/:categoryId', async (req, res) => {
@@ -25,4 +28,8 @@ router.get('/byCategory/:categoryId', async (req, res) => {
       res.status(500).json({ error: 'Failed to fetch vehicles' });
     }
   });
+
+
+  // router.get('/brand/brandid/:brandID', vehicleController.getBrandNameByBrandId);
+
 module.exports = router;

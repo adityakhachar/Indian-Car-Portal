@@ -61,3 +61,36 @@ exports.getVehiclesByCategory = async (categoryId) => {
     throw new Error('Failed to fetch vehicles by category');
   }
 };
+exports.getVehicleById = async (req, res) => {
+  try {
+    const vehicle = await Vehicle.findById(req.params.vehicleId);
+    if (!vehicle) {
+      return res.status(404).json({ message: 'Vehicle not found' });
+    }
+    res.json(vehicle);
+  } catch (error) {
+    console.error('Error fetching vehicle:', error);
+    res.status(500).json({ error: 'Failed to fetch vehicle' });
+  }
+};
+
+const getBrandNameByBrandId = async (req, res) => {
+  const brandId = req.params.brandID;
+
+  try {
+    const response = await fetch('http://localhost:5000/api/brands'); // Adjust URL as per your API
+    const brandsData = await response.json();
+
+    // Find the brand with the matching brandId
+    const brand = brandsData.find(brand => brand._id === brandId);
+
+    if (!brand) {
+      return res.status(404).json({ message: 'Brand not found' });
+    }
+
+    res.json({ brandName: brand.name });
+  } catch (error) {
+    console.error('Error fetching brands:', error);
+    res.status(500).json({ message: 'Server error' });
+  }
+};
