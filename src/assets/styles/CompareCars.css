@@ -1,0 +1,65 @@
+/* / compare cars page / */
+.cmp-cars .cmp-table{
+	width: 90%;
+	margin: 20px 5%;
+	padding: 20px 10px;
+	border-radius: 5px;
+	background-color: #fff;
+	font-family: "Yantramanav", sans-serif;
+}
+.cmp-table h1{
+	padding: 10px 20px 0px 20px;
+	font-family: "Yantramanav", sans-serif;
+}
+.cmp-table p{
+	padding: 10px 20px 20px 20px;
+	font-size: 16px;
+	line-height: 22px;
+}
+.cmp-table table{
+	width: 80%;
+	margin: 10px 10%;
+	font-size: 16px;
+	border-collapse: collapse;
+}
+.cmp-table table caption{
+	text-align: left;
+	font-size: 22px;
+	font-weight: 600;
+	margin: 10px 0px;
+}
+.cmp-table table td:nth-child(1){
+	width: 40%;
+}
+.cmp-table table td:nth-child(2),.cmp-table table td:nth-child(3){
+	width: 30%;
+	color: #252525;
+}
+.cmp-table table i{
+	color: #218c60;
+}
+.cmp-table table select{
+	border: 1px solid #e6e6e6;
+	padding: 4px;
+	margin-left: 5px;
+	border-radius: 4px;
+}
+.cmp-table table th,.cmp-table table td {
+  padding: 12px 16px;
+  text-align: left;
+  border: 1px solid #ddd;
+}
+.cmp-cars .table-section{
+	background-color: #fff;
+	width: 90%;
+	margin: 0px 5%;
+	padding: 10px;
+}
+.cmp-cars .table-section table caption{
+	color: black;
+	border:none;
+}
+.cmp-cars .car-colors{
+	background-color: #fff;
+	padding: 20px 0px;
+}

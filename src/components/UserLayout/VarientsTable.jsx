@@ -1,112 +1,95 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import axios from 'axios';
+import { ThunderboltOutlined, SettingOutlined } from '@ant-design/icons';
 import '../../assets/styles/UserStyle.css';
-export default function VarientsTable() {
+
+const VarientsTable = () => {
+  const [vehicleVariants, setVehicleVariants] = useState([]);
+  const [vehicleName, setVehicleName] = useState('');
+  const [priceCity, setPriceCity] = useState([]);
+  const [loading, setLoading] = useState(true); // State to manage loading state
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchVehicleData = async () => {
+      try {
+        const response = await axios.get(`http://localhost:5000/api/vehicles/${id}`);
+        if (response.data) {
+          setVehicleName(response.data.name);
+          setPriceCity(response.data.city_price);
+          setVehicleVariants(response.data.variants);
+          setLoading(false); // Set loading to false after data is fetched
+        }
+      } catch (error) {
+        console.error('Error fetching vehicle data:', error);
+        setLoading(false); // Ensure loading is set to false on error
+      }
+    };
+
+    fetchVehicleData();
+  }, [id]);
+
+  const renderEngineSize = () => {
+    if (!vehicleVariants || vehicleVariants.length === 0) return null;
+
+    const engineSizes = vehicleVariants.map(variant => variant.engine_size);
+    if (engineSizes.length === 0) return null;
+
+    const minEngineSize = Math.min(...engineSizes);
+    const maxEngineSize = Math.max(...engineSizes);
+
+    return (
+      <h4>
+        {minEngineSize === maxEngineSize ? `${minEngineSize} cc` : `${minEngineSize} - ${maxEngineSize} cc`}
+      </h4>
+    );
+  };
+
+  const formatPrice = (price) => {
+    if (price >= 10000000) {
+      return `${(price / 10000000).toFixed(1)} Crore`;
+    } else {
+      return `${(price / 100000).toFixed(1)} Lakh`;
+    }
+  };
+
+  if (loading) {
+    return <p>Loading...</p>; // Handle loading state
+  }
+
   return (
     <section className="table-section" id="variant">
-        <table>
-          <caption>Swift Petrol Variants</caption> 
-          <tbody>
-            <tr>
-              <td className="title">LXI</td>
+      <table>
+        <caption>{vehicleName} Variants</caption>
+        <tbody>
+          {vehicleVariants.map((variant, index) => (
+            <tr key={index}>
+              <td className="title">{variant.name}</td>
               <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
+                <ThunderboltOutlined /> {renderEngineSize()}
               </td>
               <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> Manual
+                <SettingOutlined /> {variant.transmission_type[0] === 'A' ? 'Auto' : 'Manual'}
               </td>
-              <td className="data">₹ 5.19 Lakh</td>
+              <td className="data">₹ {formatPrice(variant.price)}</td>
             </tr>
-            <tr>
-              <td className="title">VXI</td>
-              <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
-              </td>
-              <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> Manual
-              </td>
-              <td className="data">₹ 6.19 Lakh</td>
+          ))}
+        </tbody>
+      </table>
+      <table>
+        <caption>Price in Popular Cities</caption>
+        <tbody>
+          {priceCity.map((cityData, index) => (
+            <tr key={index}>
+              <td className="title">{cityData.name}</td>
+              <td className="data">₹ {formatPrice(cityData.price)} - ₹ {formatPrice(cityData.price + 140000)}</td>
             </tr>
-            <tr>
-              <td className="title">VXI AMT</td>
-              <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
-              </td>
-              <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> A Auto
-              </td>
-              <td className="data">₹ 6.66 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">ZXI</td>
-              <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
-              </td>
-              <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> Manual
-              </td>
-              <td className="data">₹ 6.78 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">ZXI AMT</td>
-              <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
-              </td>
-              <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> A Auto
-              </td>
-              <td className="data">₹ 7.25 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">ZXI+</td>
-              <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
-              </td>
-              <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> Manual
-              </td>
-              <td className="data">₹ 7.58 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">ZXI+ AMT</td>
-              <td className="title">
-                <i className="fa fa-bolt" aria-hidden="true"></i> 1197cc
-              </td>
-              <td className="title">
-                <i className="fa fa-cogs" aria-hidden="true"></i> A Auto
-              </td>
-              <td className="data">₹ 8.02 Lakh</td>
-            </tr>
-          </tbody>
-        </table>
-        <table>
-          <caption>Price in Popular City</caption>
-          <tbody>
-            <tr>
-              <td className="title">Ahmedabad</td>
-              <td className="data">₹ 5.19 - 8.02 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">Delhi</td>
-              <td className="data">₹ 5.67 - 8.93 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">Mumbai</td>
-              <td className="data">₹ 6.07 - 9.29 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">Pune</td>
-              <td className="data">₹ 6.09 - 9.33 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">Chennai</td>
-              <td className="data">₹ 5.97 - 9.15 Lakh</td>
-            </tr>
-            <tr>
-              <td className="title">Kolkata</td>
-              <td className="data">₹ 5.74 - 8.8 Lakh</td>
-            </tr>
-          </tbody>
-        </table>
-      </section>
-  )
-}
+          ))}
+        </tbody>
+      </table>
+    </section>
+  );
+};
+
+export default VarientsTable;

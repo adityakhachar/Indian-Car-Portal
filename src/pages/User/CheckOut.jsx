@@ -5,6 +5,8 @@ import FooterComponent from '../../components/UserLayout/Footer';
 import '../../assets/styles/UserStyle.css'; // Import the external CSS file
 import CarIntro from '../../components/UserLayout/CarIntro';
 import VarientsTable from '../../components/UserLayout/VarientsTable';
+import CarColors from '../../components/UserLayout/CarColors';
+import SpecificationTable from '../../components/UserLayout/SpecificationTable';
 
 const { Content, Footer } = Layout;
 
@@ -66,6 +68,12 @@ const CheckOut = () => {
       </div>
         <div>
       <VarientsTable/>
+      </div>
+      <div>
+        <SpecificationTable/>
+      </div>
+      <div>
+        <CarColors/>
       </div>
       <Footer style={{ textAlign: 'center' }}>
         <FooterComponent />
