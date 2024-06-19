@@ -91,33 +91,54 @@ const CarIntro = () => {
   // Function to render transmission types dynamically
   const renderTransmissionTypes = () => {
     if (!vehicle || !vehicle.variants || vehicle.variants.length === 0) return null;
-
-    const transmissionTypes = [...new Set(vehicle.variants.map(variant => variant.transmission))];
-    
+  
+    // Map transmission codes to full names
+    const transmissionTypeMap = {
+      A: 'Automatic',
+      M: 'Manual',
+      AMT: 'Automated Manual Transmission',
+      CVT: 'Continuously Variable Transmission',
+      DCT: 'Dual-Clutch Transmission'
+      // Add more mappings as needed
+    };
+  
+    // Get unique transmission types from vehicle variants and map them to full names
+    const transmissionTypes = [...new Set(vehicle.variants.flatMap(variant => variant.transmission_type))];
+    const transmissionNames = transmissionTypes.map(type => transmissionTypeMap[type] || 'Unknown').join(' / ');
+  
     return (
-      <>
-        {transmissionTypes.map((type, index) => (
-          <div key={index} className="feature-box">
-            <img src="https://img.icons8.com/bubbles/60/000000/automatic-gearbox-warning.png" alt="feature icon" />
-            <h4>{type}</h4>
-          </div>
-        ))}
-      </>
+      <div className="feature-box">
+        <img src="https://img.icons8.com/bubbles/60/000000/automatic-gearbox-warning.png" alt="feature icon" />
+        <h4>{transmissionNames}</h4>
+      </div>
     );
   };
+  
 
   // Function to render engine size
   const renderEngineSize = () => {
     if (!vehicle || !vehicle.variants || vehicle.variants.length === 0) return null;
 
-    // Check if all engine sizes are the same
-    const allSameEngineSize = vehicle.variants.every(variant => variant.engine_size === vehicle.variants[0].engine_size);
+    // Get all engine sizes from the variants
+    const engineSizes = vehicle.variants.map(variant => variant.engine_size);
+    
+    // Determine the minimum and maximum engine sizes
+    const minEngineSize = Math.min(...engineSizes);
+    const maxEngineSize = Math.max(...engineSizes);
 
     return (
       <h4>
-        {vehicle.variants[0].engine_size} {allSameEngineSize ? 'cc' : ` - ${vehicle.variants[1].engine_size} cc`}
+        {minEngineSize === maxEngineSize ? `${minEngineSize} cc` : `${minEngineSize} - ${maxEngineSize} cc`}
       </h4>
     );
+  };
+
+  // Map vehicle_type codes to full names
+  const vehicleTypeMap = {
+    P: 'Petrol',
+    D: 'Diesel',
+    E: 'Electric'
+    // Add more mappings as needed
   };
 
   // Render component
@@ -151,18 +172,19 @@ const CarIntro = () => {
           </div>
 
           {/* Render transmission types dynamically */}
-          <div className="feature-box">
-  <img src="https://img.icons8.com/bubbles/60/000000/gas-station.png" alt="feature icon" />
-  <h4>{vehicle && vehicle.vehicle_type}</h4>
-</div>  
-          
+          {renderTransmissionTypes()}
+
           {/* Render engine size */}
           <div className="feature-box">
             <img src="https://img.icons8.com/clouds/60/000000/dashboard.png" alt="feature icon" />
             {renderEngineSize()}
           </div>
-          {renderTransmissionTypes()}
-        
+
+          {/* Render vehicle type */}
+          <div className="feature-box">
+            <img src="https://img.icons8.com/bubbles/60/000000/gas-station.png" alt="feature icon" />
+            <h4>{vehicle && vehicleTypeMap[vehicle.vehicle_type]}</h4>
+          </div>
         </div>
       </div>
       <hr />
@@ -170,13 +192,14 @@ const CarIntro = () => {
         {/* Render vehicle overview and specifications only if vehicle is available */}
         {vehicle && (
           <>
-            <h3 className="title">Swift Overview</h3>
+            <h3 className="title">{vehicle.name} Overview</h3>
             <p>{vehicle.overview}</p>
             <h3 className="title">Swift Specification</h3>
             <p>India’s favourite hatchback gets a fresh design language that is youthful as well as upmarket. The interiors have been designed with a host of advanced features including a new cockpit design and a sporty steering wheel with cruise and audio controls and a seven-inch Smartplay Studio.</p>
           </>
         )}
       </div>
+      
     </section>
   );
 };

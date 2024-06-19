@@ -4,8 +4,9 @@ import Navbar from '../../components/UserLayout/Navbar'; // Corrected import pat
 import FooterComponent from '../../components/UserLayout/Footer';
 import '../../assets/styles/UserStyle.css'; // Import the external CSS file
 import CarIntro from '../../components/UserLayout/CarIntro';
+import VarientsTable from '../../components/UserLayout/VarientsTable';
 
-const {  Content, Footer } = Layout;
+const { Content, Footer } = Layout;
 
 const CheckOut = () => {
   // Default values for theme tokens (replace with actual values if using theme)
@@ -23,7 +24,7 @@ const CheckOut = () => {
           <Breadcrumb.Item>Home</Breadcrumb.Item>
           <Breadcrumb.Item>Car</Breadcrumb.Item>
         </Breadcrumb>
-        
+
         <div style={{ textAlign: 'center', marginBottom: 16 }}>
           <span>
             <a href="#" className="link">
@@ -46,20 +47,26 @@ const CheckOut = () => {
             </a>
           </span>
         </div>
-        </Content>
-        <div
-          style={{
-            background: colorBgContainer,
-            minHeight: 280,
-            padding: 24,
-            borderRadius: borderRadiusLG,
-            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Example shadow
-          }}
-        >
-            <CarIntro/>
-          {/* Other content of your application */}
-        </div>
-      
+      </Content>
+      <div
+        style={{
+          background: colorBgContainer,
+          minHeight: 280,
+          padding: 24,
+          borderRadius: borderRadiusLG,
+          boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Example shadow
+        }}
+      >
+        <CarIntro />
+
+        {/* Other content of your application */}
+      </div>
+      <div class="adv-cars" style={{ marginTop: 30, padding: '0px 5%' }}>
+        <img src="https://nandpalmohit.github.io/carsline/assets/adv/i20hr.jpg" width="100%" />
+      </div>
+        <div>
+      <VarientsTable/>
+      </div>
       <Footer style={{ textAlign: 'center' }}>
         <FooterComponent />
       </Footer>

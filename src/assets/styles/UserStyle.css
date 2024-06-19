@@ -147,7 +147,17 @@
 
 
 
-
+footer.content .data h3,
+  footer.content .link h3,
+  footer.content .service h3,
+  footer.content .detail h3 {
+    padding: 15px 20px;
+    font-family: 'Monoton', cursive;
+    font-weight: 600;
+    color: #21618C;
+    font-size: 22px;
+    cursor: pointer;
+  }
 footer.content {
   background-color: #f5f5f5;
   padding: 30px 50px;
@@ -156,14 +166,6 @@ footer.content {
   gap: 20px;
 }
 
-footer.content .data h3,
-footer.content .link h3,
-footer.content .service h3,
-footer.content .detail h3 {
-  color: #333;
-  font-size: 18px;
-  margin-bottom: 10px;
-}
 
 footer.content .data p {
   color: #666;
@@ -468,6 +470,8 @@ transition: .5s;
 .car-box .feature-box{
 	border-radius: 10px;
 	padding: 20px 10px;
+  align-items: center; /* Center items horizontally */
+  justify-content: center;
 	width: 160px;
 	font-family: "Poppins", sans-serif;
 	color: #21618c;
@@ -476,6 +480,16 @@ transition: .5s;
 }
 .car-box .feature-box:hover{
 	background-color: #f7f7f7;
+}
+.feature-box img {
+  margin-bottom: 10px;
+  width: 60px; /* Ensure the image fits well within the box */
+  height: 60px;
+}
+
+.feature-box h4 {
+  margin: 0;
+  font-size: 1rem;
 }
 .car-review h3.title{
 	margin: 30px 0px 10px 0px;
@@ -511,4 +525,60 @@ transition: .5s;
 .breadcrumb a:hover{
 	color: #21618c;
 	transition: .3s;
+}
+
+/* / key specs content / */
+.table-section{
+	width: 100%;
+	padding: 100px 40px 40px 40px;
+	font-family: "Yantramanav", sans-serif;
+	position: relative;
+	display: grid;
+	grid-template-columns: auto auto;
+	grid-gap: 60px;
+}
+.table-section table{
+	margin-top: 10px;
+	width: 100%;
+	background-color: #fff;
+}
+.table-section table caption{
+	padding: 4px 8px;
+	margin: 10px 0px;
+	font-size: 20px;
+	font-weight: 700;
+	text-align: left;
+	border-left: 3px solid #cccccc;
+	color: #5214ae;
+}
+.table-section td {
+  	border-bottom: 1px solid #e6e6e6;
+  	padding: 8px 12px;
+}
+.table-section table tr td.title{
+	color: #232323;
+	font-size: 16px;
+  	padding: 8px 12px;
+}
+.table-section table tr td.data{
+	color: #36495c;
+	font-weight: 600;
+	font-size: 16px;
+  	padding: 12px 16px;
+}
+.table-section table.alternative-cars{
+	width: 80%;
+	margin: 10px 10%;
+	text-align: center;
+	border-collapse: collapse;
+	border: 1px solid #e6e6e6;
+}
+.table-section table.alternative-cars td{
+	font-weight: 600;
+	font-size: 18px;
+	line-height: 22px;
+}
+.table-section table.alternative-cars td span{
+	font-weight: 400;
+	font-size: 16px;
 }
