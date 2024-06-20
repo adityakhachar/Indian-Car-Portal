@@ -34,17 +34,17 @@ const CheckOut = () => {
             </a>
           </span>
           <span>
-            <a href="#" className="link">
+            <a href="#varients" className="link">
               Variant
             </a>
           </span>
           <span>
-            <a href="#" className="link">
+            <a href="#specs" className="link">
               Specification
             </a>
           </span>
           <span>
-            <a href="#" className="link">
+            <a href="#colors" className="link">
               Colors
             </a>
           </span>
@@ -66,13 +66,13 @@ const CheckOut = () => {
       <div class="adv-cars" style={{ marginTop: 30, padding: '0px 5%' }}>
         <img src="https://nandpalmohit.github.io/carsline/assets/adv/i20hr.jpg" width="100%" />
       </div>
-        <div>
+        <div id='varients'>
       <VarientsTable/>
       </div>
-      <div>
+      <div id='specs'>
         <SpecificationTable/>
       </div>
-      <div>
+      <div id='colors'>
         <CarColors/>
       </div>
       <Footer style={{ textAlign: 'center' }}>

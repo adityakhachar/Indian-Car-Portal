@@ -19,16 +19,8 @@ router.get('/:vehicleId', vehicleController.getVehicleById);
 
 // Get vehicles by category ID
 // Get vehicles by category ID
-router.get('/byCategory/:categoryId', async (req, res) => {
-  try {
-    const categoryId = req.params.categoryId;
-    const vehicles = await vehicleController.getVehiclesByCategory(categoryId);
-    res.json(vehicles);
-  } catch (error) {
-    console.error('Error fetching vehicles by category:', error);
-    res.status(500).json({ error: 'Failed to fetch vehicles by category' });
-  }
-});
+router.get('/byCategory/:categoryId', vehicleController.getVehiclesByCategory);
+
 
 
   // router.get('/brand/brandid/:brandID', vehicleController.getBrandNameByBrandId);

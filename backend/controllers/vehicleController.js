@@ -52,13 +52,15 @@ exports.deleteVehicle = async (req, res) => {
     res.status(500).json({ error: 'Failed to delete vehicle' });
   }
 };
-exports.getVehiclesByCategory = async (categoryId) => {
+exports.getVehiclesByCategory = async (req, res) => {
   try {
-    const vehicles = await Vehicle.find({ category_id: categoryId });
-    return vehicles;
+    const categoryId = req.params.categoryId;
+    const limit = parseInt(req.query.limit, 10) || 10; // Default limit to 10 if not specified
+    const vehicles = await Vehicle.find({ category_id: categoryId }).limit(limit);
+    res.json(vehicles);
   } catch (error) {
     console.error('Error fetching vehicles by category:', error);
-    throw new Error('Failed to fetch vehicles by category');
+    res.status(500).json({ error: 'Failed to fetch vehicles by category' });
   }
 };
 exports.getVehicleById = async (req, res) => {

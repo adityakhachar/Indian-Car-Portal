@@ -22,6 +22,7 @@ const colorNames = {
 const CarColors = () => {
   const [carColors, setCarColors] = useState([]);
   const [activeTab, setActiveTab] = useState('');
+  const [carName, setCarName] = useState('');
 
   const { id } = useParams();
 
@@ -31,6 +32,7 @@ const CarColors = () => {
         const response = await axios.get(`http://localhost:5000/api/vehicles/${id}`);
         if (response.data && response.data.colors) {
           setCarColors(response.data.colors);
+          setCarName(response.data.name);
           setActiveTab(response.data.colors[0]?._id); // Set initial active tab to the first color ID
         }
       } catch (error) {
@@ -57,7 +59,7 @@ const CarColors = () => {
 
   return (
     <div className="car-colors" id="color">
-      <h3>Swift Colors</h3>
+      <h3>{carName} Colors</h3>
       <div className="badge-color">
         {carColors.map((color) => (
           <Chip

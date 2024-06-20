@@ -2,12 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../../assets/styles/CompareCars.css';
+// import AlternativeCarRow from './AlternativeCarRow'; // Make sure to adjust the import path
 
 const SpecificationTable = () => {
   const { id } = useParams();
   const [vehicleData, setVehicleData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alternativeCars, setAlternativeCars] = useState([]);
+  const staticCategoryId = '6668257973cd6403d5f164ac'; // Define the static category ID here
 
   useEffect(() => {
     const fetchVehicleData = async () => {
@@ -16,7 +18,7 @@ const SpecificationTable = () => {
         if (response.data) {
           setVehicleData(response.data);
           setLoading(false);
-          fetchAlternativeCars(response.data.category); // Fetch alternative cars after main car data is fetched
+          fetchAlternativeCars(response.data.category_id, id);
         }
       } catch (error) {
         console.error('Error fetching vehicle data:', error);
@@ -27,12 +29,12 @@ const SpecificationTable = () => {
     fetchVehicleData();
   }, [id]);
 
-  const fetchAlternativeCars = async (category) => {
+  const fetchAlternativeCars = async (categoryId, currentVehicleId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/vehicles?category=${category}&limit=4`);
-      
+      const response = await axios.get(`http://localhost:5000/api/vehicles/byCategory/${categoryId}?limit=4`);
       if (response.data) {
-        setAlternativeCars(response.data);
+        const filteredCars = response.data.filter(car => car._id !== currentVehicleId);
+        setAlternativeCars(filteredCars);
       }
     } catch (error) {
       console.error('Error fetching alternative cars:', error);
@@ -47,62 +49,56 @@ const SpecificationTable = () => {
     return <p>Failed to fetch vehicle data.</p>;
   }
 
-  // Function to render transmission types
   const renderTransmissionTypes = () => {
     if (!vehicleData.variants || vehicleData.variants.length === 0) return null;
 
-    // Map transmission codes to full names
     const transmissionTypeMap = {
       A: 'Automatic',
       M: 'Manual',
       AMT: 'Automated Manual Transmission',
       CVT: 'Continuously Variable Transmission',
       DCT: 'Dual-Clutch Transmission'
-      // Add more mappings as needed
     };
 
-    // Get unique transmission types from all variants
     const transmissionTypes = [...new Set(vehicleData.variants.flatMap(variant => variant.transmission_type))];
-    
-    // Map transmission types to their full names
     const transmissionNames = transmissionTypes.map(type => transmissionTypeMap[type] || 'Unknown').join(' / ');
 
     return transmissionNames;
   };
 
-  // Function to render engine sizes
   const renderEngineSize = () => {
     if (!vehicleData || !vehicleData.variants || vehicleData.variants.length === 0) return null;
 
-    // Get all engine sizes from the variants
     const engineSizes = vehicleData.variants.map(variant => variant.engine_size);
-    
-    // Determine the minimum and maximum engine sizes
     const minEngineSize = Math.min(...engineSizes);
     const maxEngineSize = Math.max(...engineSizes);
 
-    return (
-      <h4>
-        {minEngineSize === maxEngineSize ? `${minEngineSize} cc` : `${minEngineSize} - ${maxEngineSize} cc`}
-      </h4>
-    );
+    return minEngineSize === maxEngineSize ? `${minEngineSize} cc` : `${minEngineSize} - ${maxEngineSize} cc`;
   };
 
   const vehicleTypeMap = {
     P: 'Petrol',
     D: 'Diesel',
     E: 'Electric'
-    // Add more mappings as needed
   };
 
   const formatPrice = (price) => {
     if (price >= 10000000) {
-      // If price is 1 crore or more
       return `${(price / 10000000).toFixed(1)} Crore`;
     } else {
-      // If price is less than 1 crore
       return `${(price / 100000).toFixed(1)} Lakh`;
     }
+  };
+
+  const VehicleInfoTable = ({ vehicleData }) => {
+    const prices = vehicleData.variants.map(variant => variant.price);
+    const priceRange = prices[0] === prices[prices.length - 1]
+      ? `${formatPrice(prices[0])}`
+      : `${formatPrice(prices[0])} - ${formatPrice(prices[prices.length - 1])}`;
+
+    return (
+      <TableRow title="Ex-Showroom Price (Delhi)" data={priceRange} />
+    );
   };
 
   return (
@@ -110,8 +106,8 @@ const SpecificationTable = () => {
       <table>
         <caption>{vehicleData.name} Specification</caption>
         <tbody>
-          <TableRow title="Ex-Showroom Price (Delhi)" data={`${formatPrice(vehicleData.variants[0].price)} - ${formatPrice(vehicleData.variants[vehicleData.variants.length - 1].price)}`} />
-          <TableRow title="Fuel Type" data={vehicleData && vehicleTypeMap[vehicleData.vehicle_type]} />
+          <VehicleInfoTable vehicleData={vehicleData} />
+          <TableRow title="Fuel Type" data={vehicleTypeMap[vehicleData.vehicle_type]} />
           <TableRow title="Transmission Type" data={renderTransmissionTypes()} />
           <TableRow title="Engine Size" data={renderEngineSize()} />
           <TableRow title="Power" data="83 bhp @ 6000 RPM - 74 bhp @ 4000 RPM" />
@@ -140,45 +136,43 @@ const SpecificationTable = () => {
           <TableRow title="Airbags" data="1 (Driver Only) <br />2 (Driver &amp; Co-Driver)" />
         </tbody>
       </table>
-      <table className="alternative-cars">
-        <caption>Alternatives to {vehicleData.name}</caption>
-        <tbody>
-          {alternativeCars.map((car, index) => (
-            <AlternativeCarRow
-              key={index}
-              imgSrc={`/carsline/assets/cars/${car.image}`}
-              carName={car.name}
-              price={`${formatPrice(car.price)}*`}
-            />
-          ))}
-        </tbody>
-      </table>
+
+      {alternativeCars.length > 0 && (
+        <table className="alternative-cars">
+          <caption>Alternatives to {vehicleData.name}</caption>
+          <tbody>
+            {alternativeCars.map((car, index) => (
+              <AlternativeCarRow
+                key={index}
+                imgSrc={car.images[0]}
+                carName={car.name}
+                price={`${formatPrice(car.variants[0].price)}*`}
+              />
+            ))}
+          </tbody>
+        </table>
+      )}
     </section>
   );
 };
 
-const TableRow = ({ title, data }) => {
-  return (
-    <tr>
-      <td className="title">{title}</td>
-      <td className="data" dangerouslySetInnerHTML={{ __html: data }} />
-    </tr>
-  );
-};
+const TableRow = ({ title, data }) => (
+  <tr>
+    <td className="title">{title}</td>
+    <td className="data" dangerouslySetInnerHTML={{ __html: data }} />
+  </tr>
+);
 
-const AlternativeCarRow = ({ imgSrc, carName, price }) => {
-  return (
-    <tr>
-      <td><img src={imgSrc} width="120px" alt={carName} /></td>
-      <td>
-        {carName}
-        <br />
-        <span>
-          <i className="fa fa-inr" aria-hidden="true"></i> {price}
-        </span>
-      </td>
-    </tr>
-  );
-};
+const AlternativeCarRow = ({ imgSrc, carName, price }) => (
+  <tr>
+    <td className="alternative-car-image"><img src={imgSrc} width="120px" alt={carName} /></td>
+    <td className="alternative-car-details">
+      <div className="car-name">{carName}</div>
+      <div className="car-price">
+        <span><i className="fa fa-inr" aria-hidden="true"></i> {price}</span>
+      </div>
+    </td>
+  </tr>
+);
 
 export default SpecificationTable;

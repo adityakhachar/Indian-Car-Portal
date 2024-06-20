@@ -48,9 +48,9 @@ const VarientsTable = () => {
 
   const formatPrice = (price) => {
     if (price >= 10000000) {
-      return `${(price / 10000000).toFixed(1)} Crore`;
+      return `${(price / 10000000).toFixed(2)} Crore`;
     } else {
-      return `${(price / 100000).toFixed(1)} Lakh`;
+      return `${(price / 100000).toFixed(2)} Lakh`;
     }
   };
 

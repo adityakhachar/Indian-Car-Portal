@@ -5,12 +5,24 @@ import axios from 'axios';
 import '../../assets/styles/UserStyle.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Rate, Typography } from 'antd';
 
 const CarIntro = () => {
   const [vehicle, setVehicle] = useState(null);
   const [brandName, setBrandName] = useState(""); // State to store brand name
   const { id } = useParams(); // Get vehicleId from URL params
   const vehicleId = id; // Assign the extracted ID from URL to vehicleId
+
+  const formatPriceRange = (prices) => {
+    if (prices.length === 0) return '';
+
+    const minPrice = prices[0];
+    const maxPrice = prices[prices.length - 1];
+
+    return minPrice === maxPrice
+      ? `${formatPrice(minPrice)}`
+      : `${formatPrice(minPrice)} - ${formatPrice(maxPrice)}`;
+  };
 
   // Fetch vehicle data
   useEffect(() => {
@@ -91,7 +103,7 @@ const CarIntro = () => {
   // Function to render transmission types dynamically
   const renderTransmissionTypes = () => {
     if (!vehicle || !vehicle.variants || vehicle.variants.length === 0) return null;
-  
+
     // Map transmission codes to full names
     const transmissionTypeMap = {
       A: 'Automatic',
@@ -101,11 +113,11 @@ const CarIntro = () => {
       DCT: 'Dual-Clutch Transmission'
       // Add more mappings as needed
     };
-  
+
     // Get unique transmission types from vehicle variants and map them to full names
     const transmissionTypes = [...new Set(vehicle.variants.flatMap(variant => variant.transmission_type))];
     const transmissionNames = transmissionTypes.map(type => transmissionTypeMap[type] || 'Unknown').join(' / ');
-  
+
     return (
       <div className="feature-box">
         <img src="https://img.icons8.com/bubbles/60/000000/automatic-gearbox-warning.png" alt="feature icon" />
@@ -113,7 +125,7 @@ const CarIntro = () => {
       </div>
     );
   };
-  
+
 
   // Function to render engine size
   const renderEngineSize = () => {
@@ -121,7 +133,7 @@ const CarIntro = () => {
 
     // Get all engine sizes from the variants
     const engineSizes = vehicle.variants.map(variant => variant.engine_size);
-    
+
     // Determine the minimum and maximum engine sizes
     const minEngineSize = Math.min(...engineSizes);
     const maxEngineSize = Math.max(...engineSizes);
@@ -141,6 +153,46 @@ const CarIntro = () => {
     // Add more mappings as needed
   };
 
+  // Component to render random star rating
+  const RandomRate = () => {
+    // Function to get a random star rating between 0 and 5
+    const getRandomStarRating = () => {
+      const randomValue = Math.random() * 5;
+      return Math.floor(randomValue * 10) / 10; // Limit to one decimal place
+    };
+
+    // Function to retrieve or initialize stored rating for current vehicleId
+    const getStoredRating = () => {
+      const storedRating = localStorage.getItem(`vehicle_${vehicleId}_rating`);
+      return storedRating ? parseFloat(storedRating) : null;
+    };
+
+    // State to hold the current rating
+    const [rating, setRating] = useState(getStoredRating());
+
+    // Effect to update localStorage when rating changes
+    useEffect(() => {
+      if (rating !== null) {
+        localStorage.setItem(`vehicle_${vehicleId}_rating`, rating);
+      }
+    }, [rating, vehicleId]);
+
+    // If rating is not stored or null, generate a new random rating
+    const generateRating = () => {
+      const newRating = getRandomStarRating();
+      setRating(newRating);
+    };
+
+    // If no rating is stored, generate a new one
+    if (rating === null) {
+      generateRating();
+    }
+
+    return (
+      <Rate value={rating} disabled allowHalf className="antd-rate" />
+    );
+  };
+
   // Render component
   return (
     <section className="car-banner" id="overview">
@@ -151,14 +203,12 @@ const CarIntro = () => {
           <div className="car-body">
             <h1 style={{ fontSize: '2rem', fontWeight: 'bold' }}>{`${brandName} ${vehicle.name}`}</h1>
             <div className="rating">
-              <span className="fa fa-star checked"></span>
-              <span className="fa fa-star checked"></span>
-              <span className="fa fa-star checked"></span>
-              <span className="fa fa-star"></span>
-              <span className="fa fa-star"></span>
-              <a href="#" title="200 reviews | 78 Ratings">200 reviews | 78 Ratings</a>
+              <RandomRate />
+              <Typography.Text>
+                <a href="#" title="200 reviews | 78 Ratings">200 reviews | 78 Ratings</a>
+              </Typography.Text>
             </div>
-            <h2 className="car-price"><i className="fa fa-inr" aria-hidden="true"></i> <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>₹ {`${formatPrice(vehicle.variants[0].price)} - ${formatPrice(vehicle.variants[vehicle.variants.length - 1].price)}*`}</span></h2>
+            <h2 className="car-price"><i className="fa fa-inr" aria-hidden="true"></i> <span style={{ fontWeight: 'bold', fontSize: '1rem' }}>₹ {vehicle && formatPriceRange(vehicle.variants.map(variant => variant.price))}*</span></h2>
             <span className="car-span">*Ex-Showroom price in Ahmedabad</span>
             <button className="offerBtn" fdprocessedid="hh7t5i">View More Offers</button>
             <span className="selling"><i className="fa fa-superpowers" aria-hidden="true"></i> 18498 Selling in November.</span>
@@ -194,12 +244,11 @@ const CarIntro = () => {
           <>
             <h3 className="title">{vehicle.name} Overview</h3>
             <p>{vehicle.overview}</p>
-            <h3 className="title">Swift Specification</h3>
-            <p>India’s favourite hatchback gets a fresh design language that is youthful as well as upmarket. The interiors have been designed with a host of advanced features including a new cockpit design and a sporty steering wheel with cruise and audio controls and a seven-inch Smartplay Studio.</p>
+            <h3 className="title">{vehicle.name} Specification</h3>
+            <p>India’s favourite vehicle gets a fresh design language that is youthful as well as upmarket. The interiors have been designed with a host of advanced features including a new cockpit design and a sporty steering wheel with cruise and audio controls and a seven-inch Smartplay Studio.</p>
           </>
         )}
       </div>
-      
     </section>
   );
 };
