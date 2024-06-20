@@ -465,26 +465,29 @@ transition: .5s;
 	grid-template-columns: auto auto;
 	border: 1px solid #e3e3fc;
 	height: 100%;
+  align-items: center;
 	border-radius: 10px;
 }
-.car-box .feature-box{
-	border-radius: 10px;
-	padding: 20px 10px;
-  align-items: center; /* Center items horizontally */
+.car-box .feature-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
-	width: 160px;
-	font-family: "Poppins", sans-serif;
-	color: #21618c;
-	text-align: center;
-	cursor: pointer;
+  border-radius: 10px;
+  padding: 20px 10px;
+  width: 160px;
+  font-family: "Poppins", sans-serif;
+  color: #21618c;
+  text-align: center;
+  cursor: pointer;
 }
 .car-box .feature-box:hover{
 	background-color: #f7f7f7;
 }
 .feature-box img {
+  width: 60px; /* Set the width of the image */
+  height: 60px; /* Set the height of the image */
   margin-bottom: 10px;
-  width: 60px; /* Ensure the image fits well within the box */
-  height: 60px;
 }
 
 .feature-box h4 {

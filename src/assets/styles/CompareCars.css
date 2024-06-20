@@ -1,65 +1,115 @@
-/* / compare cars page / */
-.cmp-cars .cmp-table{
-	width: 90%;
-	margin: 20px 5%;
-	padding: 20px 10px;
-	border-radius: 5px;
-	background-color: #fff;
-	font-family: "Yantramanav", sans-serif;
+/* / Key specs content / */
+.table-section {
+  width: 100%;
+  padding: 100px 40px 40px 40px;
+  font-family: "Yantramanav", sans-serif;
+  position: relative;
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 60px;
 }
-.cmp-table h1{
-	padding: 10px 20px 0px 20px;
-	font-family: "Yantramanav", sans-serif;
+
+.table-section table {
+  margin-top: 10px;
+  width: 100%;
+  background-color: #fff;
 }
-.cmp-table p{
-	padding: 10px 20px 20px 20px;
-	font-size: 16px;
-	line-height: 22px;
-}
-.cmp-table table{
-	width: 80%;
-	margin: 10px 10%;
-	font-size: 16px;
-	border-collapse: collapse;
-}
-.cmp-table table caption{
-	text-align: left;
-	font-size: 22px;
-	font-weight: 600;
-	margin: 10px 0px;
-}
-.cmp-table table td:nth-child(1){
-	width: 40%;
-}
-.cmp-table table td:nth-child(2),.cmp-table table td:nth-child(3){
-	width: 30%;
-	color: #252525;
-}
-.cmp-table table i{
-	color: #218c60;
-}
-.cmp-table table select{
-	border: 1px solid #e6e6e6;
-	padding: 4px;
-	margin-left: 5px;
-	border-radius: 4px;
-}
-.cmp-table table th,.cmp-table table td {
-  padding: 12px 16px;
+
+.table-section caption {
+  padding: 4px 8px;
+  margin: 10px 0px;
+  font-size: 20px;
+  font-weight: 700;
   text-align: left;
-  border: 1px solid #ddd;
+  border-left: 3px solid #cccccc;
+  color: #21618C;
+  caption-side: top;
 }
-.cmp-cars .table-section{
-	background-color: #fff;
-	width: 90%;
-	margin: 0px 5%;
-	padding: 10px;
+
+.table-section td {
+  border-bottom: 1px solid #e6e6e6;
+  padding: 8px 12px;
 }
-.cmp-cars .table-section table caption{
-	color: black;
-	border:none;
+
+.table-section table tr td.title {
+  color: #232323;
+  font-size: 16px;
+  padding: 8px 12px;
 }
-.cmp-cars .car-colors{
-	background-color: #fff;
-	padding: 20px 0px;
+
+.table-section table tr td.data {
+  color: #36495c;
+  font-weight: 600;
+  font-size: 16px;
+  padding: 12px 16px;
+}
+
+.table-section table.alternative-cars {
+  width: 80%;
+  margin: 10px 10%;
+  text-align: center;
+  border-collapse: collapse;
+  border: 1px solid #e6e6e6;
+  table-layout: auto;  
+}
+
+.table-section table.alternative-cars td {
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.6;  
+  padding: 12px;  
+  white-space: normal;  
+  vertical-align: top;
+}
+
+.table-section table.alternative-cars .alternative-car-image img {
+  width: 120px;  
+  height: auto;  
+  border-radius: 8px;  
+  vertical-align: top;
+}
+
+.table-section table.alternative-cars .alternative-car-details {
+  text-align: left;  
+  padding-left: 20px;  
+}
+
+.table-section table.alternative-cars .car-name {
+  font-size: 16px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.table-section table.alternative-cars .car-price {
+  font-size: 14px;
+  color: #757575;
+}
+
+.links {
+  font-size: 16px;
+  font-weight: 500;
+  color: 21618C;
+  text-decoration: none;
+  border: 2px solid #21618C;
+  padding: 10px 20px;
+  margin: 10px 0;
+  border-radius: 5px;
+  transition: all 0.5s ease; 
+  line-height: 20px;
+  display: inline-block;  
+}
+
+ .links:hover,
+.links:focus {
+  background-color: #21618C;
+  color: white;
+}
+
+.adv-cars img {
+transition: opacity 1s ease-in-out;
+opacity: 1;
+}
+
+.adv-cars img.fade-out {
+opacity: 0;
 }

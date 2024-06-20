@@ -7,7 +7,7 @@ const Footer = () => {
   return (
     <footer className="content">
       <div className="data">
-        <h3>CarsLine</h3>
+        <h3>AutoGuide</h3>
         <p>India's #1 and largest portal of auto car vehicle. We give you the <br /> best reviews and rates for your cars.We believe brand interaction <br /> is key in communication. Real innovations and a positive <br /> customer experience are the heart of successful communication.</p>
       </div>
       <div className="link">
@@ -27,11 +27,11 @@ const Footer = () => {
       </div>
       <div className="detail">
         <h3>Contact Us</h3>
-        <a href="mailto:emailid@gmail.com" title="">emailid@gmail.com</a>
-        <a href="tel:+919876543210" title="">+91 9876543210</a>
-        <a href="https://carsline.com" title="">Carsline.com</a>
+        <a href="mailto:adityakhachar15@gmail.com" title="">adityakhachar15@gmail.com</a>
+        <a href="tel:+917485928893" title="">+91 7485928893</a>
+        <a href="https://carwale.com" title="">AutoGuide.com</a>
       </div>
-      <a href="https://nandpalmohit.github.io/nmportfolio/" className="copyright">&copy; CarsLine 2020 All rights reserved. Powered with <span><i className="fa fa-heart" aria-hidden="true"></i></span> by Nandpal Mohit.</a>
+      <a href="https://github.com/adityakhachar" className="copyright">&copy; AutoGuide 2024 All rights reserved. Powered <span><i className="fa fa-heart" aria-hidden="true"></i></span> by Aditya Khachar.</a>
     </footer>
   );
 };

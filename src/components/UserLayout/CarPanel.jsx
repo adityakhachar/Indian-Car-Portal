@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { useLocation } from 'react-router-dom';
 import '../../assets/styles/Panel.css'; // Import your CSS file
-
+import '../../components/UserLayout/Usage';
+import { Link } from 'react-router-dom';
 const CarPanel = () => {
   const [activeTab, setActiveTab] = useState(''); // State to manage active tab
   const [categories, setCategories] = useState([]); // State to store categories
@@ -12,6 +14,7 @@ const CarPanel = () => {
   const [currentCategoryName, setCurrentCategoryName] = useState(''); // State to store current category name
   const [currentMonth, setCurrentMonth] = useState(''); // State to store current month
   const currentYear = new Date().getFullYear();
+  const location = useLocation();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -26,7 +29,7 @@ const CarPanel = () => {
 
         // Set the first category as activeTab on initial load
         if (categoriesData.length > 0) {
-          const firstCategory = categoriesData[0];
+          const firstCategory = categoriesData[1];
           setActiveTab(firstCategory._id);
           setCurrentCategoryName(firstCategory.name);
           fetchVehiclesByCategory(firstCategory._id); // Fetch vehicles initially for the first category
@@ -70,6 +73,15 @@ const CarPanel = () => {
   useEffect(() => {
     fetchVehicles();
   }, []);
+
+  useEffect(() => {
+    if (location.hash) {
+      const element = document.querySelector(location.hash);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location]);
 
   const formatPrice = (price) => {
     if (price >= 10000000) {
@@ -130,7 +142,7 @@ const CarPanel = () => {
                   <a href={`cars/${vehicle._id}`}>{vehicle.name}</a>
                   <h4><i className="fa fa-inr" aria-hidden="true"></i> {formatPrice(vehicle.city_price[0].price)} <span>onwards</span></h4>
                   <span className="card-para">*Ex-showroom price in {vehicle.city_price[0].name}</span>
-                  <a href={`cars/${vehicle._id}`} className="link">Check Out More <ArrowRightOutlined /></a>
+                  <a href={`/cars/${vehicle._id}`} className="link">Check Out More <ArrowRightOutlined /></a>
                 </div>
               </div>
             ))
@@ -144,7 +156,7 @@ const CarPanel = () => {
         </div><br/><br/>
         <div className="panel" style={{ borderRadius: "10px", backgroundColor: "#fff", width: "100%", position: "relative", boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)", marginBottom: "20px" }} id="cars">
           <h3>All Cars</h3>
-          <div className="tabs">
+          <div className="tabs" id='cars'>
             {categories.map(category => (
               <button
                 key={category._id}

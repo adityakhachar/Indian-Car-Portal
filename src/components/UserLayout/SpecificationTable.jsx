@@ -2,13 +2,14 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import '../../assets/styles/CompareCars.css';
-// import AlternativeCarRow from './AlternativeCarRow'; // Make sure to adjust the import path
+import { ArrowRightOutlined } from '@ant-design/icons'; // Import ArrowRightOutlined from Ant Design
 
 const SpecificationTable = () => {
   const { id } = useParams();
   const [vehicleData, setVehicleData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [alternativeCars, setAlternativeCars] = useState([]);
+  const [brandName, setBrandName] = useState(""); // State to store brand name
   const staticCategoryId = '6668257973cd6403d5f164ac'; // Define the static category ID here
 
   useEffect(() => {
@@ -19,6 +20,7 @@ const SpecificationTable = () => {
           setVehicleData(response.data);
           setLoading(false);
           fetchAlternativeCars(response.data.category_id, id);
+          fetchBrandName(response.data.brand_id); // Fetch brand name based on brand_id
         }
       } catch (error) {
         console.error('Error fetching vehicle data:', error);
@@ -34,10 +36,29 @@ const SpecificationTable = () => {
       const response = await axios.get(`http://localhost:5000/api/vehicles/byCategory/${categoryId}?limit=4`);
       if (response.data) {
         const filteredCars = response.data.filter(car => car._id !== currentVehicleId);
-        setAlternativeCars(filteredCars);
+        const carsWithBrandNames = await Promise.all(filteredCars.map(async (car) => {
+          const brand = await fetchBrandName(car.brand_id);
+          return {
+            ...car,
+            brandName: brand
+          };
+        }));
+        setAlternativeCars(carsWithBrandNames);
       }
     } catch (error) {
       console.error('Error fetching alternative cars:', error);
+    }
+  };
+
+  const fetchBrandName = async (brandId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/brands/${brandId}`);
+      if (response.data) {
+        return response.data.name; // Return brand name
+      }
+    } catch (error) {
+      console.error('Error fetching brand name:', error);
+      return 'Unknown Brand'; // Default value if fetching fails
     }
   };
 
@@ -136,22 +157,31 @@ const SpecificationTable = () => {
           <TableRow title="Airbags" data="1 (Driver Only) <br />2 (Driver &amp; Co-Driver)" />
         </tbody>
       </table>
-
+    <table style={{backgroundColor: "transparent"}}>
+      
       {alternativeCars.length > 0 && (
-        <table className="alternative-cars">
-          <caption>Alternatives to {vehicleData.name}</caption>
-          <tbody>
-            {alternativeCars.map((car, index) => (
-              <AlternativeCarRow
-                key={index}
-                imgSrc={car.images[0]}
-                carName={car.name}
-                price={`${formatPrice(car.variants[0].price)}*`}
-              />
-            ))}
-          </tbody>
-        </table>
+        <>
+        <caption >Alternative Cars</caption>
+        <div style={{ marginTop: '5px' }}>
+  {alternativeCars.map((car, index) => (
+    <div key={index} style={{ marginBottom: '20px', border: '1px solid #f0f0f0', borderRadius: '5px', textAlign: 'center', padding: '20px', backgroundColor: '#F8F9F9', cursor: 'pointer' }}>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '160px' }}>
+        <img src={car.images[0]} alt={`${car.brandName} ${car.name}`} style={{ maxHeight: '100%', maxWidth: '100%', borderRadius: '10px', objectFit: 'cover' }} />
+      </div>
+      <div style={{ backgroundColor: 'transparent', padding: '10px' }}>
+        <div style={{ fontSize: '16px', fontWeight: '500', marginBottom: '8px' }}>{car.brandName} {car.name}</div>
+        <div style={{ fontSize: '14px', color: '#757575' }}>
+          <span><i className="fa fa-inr" aria-hidden="true"></i> {`${formatPrice(car.variants[0].price)}*`}</span>
+        </div>
+        <a className='links' href={`/cars/${car._id}`} >Check Out More <ArrowRightOutlined /></a>
+      </div>
+    </div>
+  ))}
+</div>
+
+        </>
       )}
+      </table>
     </section>
   );
 };
@@ -160,18 +190,6 @@ const TableRow = ({ title, data }) => (
   <tr>
     <td className="title">{title}</td>
     <td className="data" dangerouslySetInnerHTML={{ __html: data }} />
-  </tr>
-);
-
-const AlternativeCarRow = ({ imgSrc, carName, price }) => (
-  <tr>
-    <td className="alternative-car-image"><img src={imgSrc} width="120px" alt={carName} /></td>
-    <td className="alternative-car-details">
-      <div className="car-name">{carName}</div>
-      <div className="car-price">
-        <span><i className="fa fa-inr" aria-hidden="true"></i> {price}</span>
-      </div>
-    </td>
   </tr>
 );
 

@@ -168,16 +168,21 @@
 }
 .brandcontent {
 	display: grid;
+	justify-content: center; 
 	grid-template-columns: repeat(6, 1fr);  
 	text-align: center; 
 	grid-gap: 10px;
   }
   
   .brandcontent .brand_cards {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
 	border: 1px solid #f0f0f0;
 	border-radius: 5px;
-	text-align: center;
-	padding: 20px;
+	padding: 10px; /* Reduced padding from 20px to 10px */
+	height: 120px; /* Reduced height to make the box smaller */
 	filter: grayscale(100%);
 	-webkit-filter: grayscale(100%);
 	background-color: #F8F9F9;
@@ -191,14 +196,17 @@
   }
   
   .brandcontent .brand_cards img {
-	height: 60px;
-	width: auto;
+	max-width: 80px; /* Adjusted max-width to 80px */
+	max-height: 80px; /* Adjusted max-height to 80px */
+	display: block;
+	margin: 0 auto; /*Center the image horizontally.*/
   }
   
   .brandcontent .brand_cards .card-data {
-	background-color: transparent;  
-	padding: 10px; 
+	background-color: transparent;
+	padding: 10px;
   }
+  
   
   .links {
 	font-weight: 400;

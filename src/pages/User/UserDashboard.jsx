@@ -6,6 +6,10 @@ import AdvInfo from '../../components/UserLayout/AdvInfo';
 import CarPanel from '../../components/UserLayout/CarPanel.jsx'; // Import the CarPanel component
 
 const UserDashboard = () => {
+  
+  
+  // Fetch vehicle data whenever vehicleId changes
+
   return (
     <>
       <div>

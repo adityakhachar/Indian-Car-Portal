@@ -17,7 +17,7 @@ const Navbar = () => {
   return (
     <div>
       <nav className="navbar-container">
-        <h3 onClick={() => window.location.href = '/'} style={{ color:'#21618C' }}>AutoGuide</h3>
+        <h3 onClick={() => window.location.href ='/user'} style={{ color:'#21618C' }}>AutoGuide</h3>
         <div className="search-container" style={{marginTop:"auto",marginBottom:"auto"}}>
           <input
             type="search"
@@ -26,7 +26,7 @@ const Navbar = () => {
             className="searchInp"
           />
           <button type="button" className="searchBtn" style={{  color:'#21618C' }}>
-            <SearchOutlined style={{ fontSize: "18px", color: "black" }} />
+            <SearchOutlined style={{ fontSize: "18px", color: "white" }} />
           </button>
         </div>
         <button type="button" className="menu-button" onClick={toggleMenu}>
@@ -34,7 +34,7 @@ const Navbar = () => {
         </button>
       </nav>
       <nav className={`menu-container ${menuActive ? 'active' : ''}`}>
-        <NavLink exact to="/" style={{ color: location.pathname === '/' ? '#5214ae' : 'black' }}>Home</NavLink>
+        <NavLink exact to="/user" style={{ color: location.pathname === '/' ? '#5214ae' : 'black' }}>Home</NavLink>
         <a href="#newCars" style={{ color: location.pathname === '/contact' ? '#5214ae' : 'black' }}>New Arrivals</a>
         <a href="#brands" style={{ color: location.pathname === '/about' ? '#5214ae' : 'black' }}>Brands</a>
         <a href="#cars" style={{ color: location.pathname === '/cars' ? '#5214ae' : 'black' }}>Cars</a>
