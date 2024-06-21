@@ -1,70 +1,170 @@
-# Getting Started with Create React App
+# AutoGuide
+A comprehensive Team Management System where employees and companies can register, view each other's details, and get in touch. This responsive web application ensures seamless interaction between job seekers and employers, accessible across various devices including mobile.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Table of Contents
+- [Installation](#installation)
+- [Usage](#usage)
+- [Features](#features)
+- [Screenshots](#screenshots)
+- [Technologies Used](#technologies-used)
+- [Contributing](#contributing)
+- [License](#license)
 
-## Available Scripts
+## Installation
+1. Clone the repository
+    ```bash
+    git clone https://github.com/adityakhachar/Indian-Car-Portal.git
+    ```
+2. Navigate to the project directory
+    ```bash
+    cd backend
+    ```
+3. Install dependencies
+    ```bash
+    npm install
+    ```
 
-In the project directory, you can run:
+## Screenshots
 
-### `npm start`
+### Dashboard
+![Dashboard](./screenshots/dash1.png)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Dashboard (page 2) 
+![Dashboard](./screenshots/dash2.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash3.png)
 
-### `npm test`
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash4.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash4.png)
 
-### `npm run build`
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash5.png)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash6.png)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash7.png)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Employee Dashboard
+![Employee Dashboard](./screenshots/dash8.png)
 
-### `npm run eject`
+### Company Dashboard
+![Company Dashboard](./screenshots/admin1.png)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### Employee Login
+![Employee Login](./screenshots/admin2.png)
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Company Login
+![Company Login](./screenshots/admin3.png)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### List of Companies (Page 1)
+![List of Companies 1](./screenshots/admin4.png)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### List of Companies (Page 2)
+![List of Companies 2](./screenshots/admin5.png)
 
-## Learn More
+### List of Employees (Page 1)
+![List of Employees 1](./screenshots/admin6.png)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+### List of Employees (Page 2)
+![List of Employees 2](./screenshots/admin7.png)
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Employee Dashboard
+![Employee Dashboard](./screenshots/admin8.png)
 
-### Code Splitting
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+To get the project up and running, follow these steps:
 
-### Analyzing the Bundle Size
+### Starting the Frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
 
-### Making a Progressive Web App
+1. Install the necessary dependencies:
+    ```bash
+    npm install
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+2. Start the frontend development server:
+    ```bash
+    npm start
+    ```
+    This will launch the frontend on `http://localhost:3000`.
 
-### Advanced Configuration
+### Starting the Backend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+1. Navigate to the backend directory (if it's in a different folder, adjust the path accordingly):
+    ```bash
+    cd backend
+    ```
 
-### Deployment
+2. Install the necessary backend dependencies:
+    ```bash
+    npm install
+    ```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+3. Start the backend server:
+    ```bash
+    node index.js
+    ```
+    This will launch the backend server on `http://localhost:5000`.
 
-### `npm run build` fails to minify
+### Accessing the Application
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Once both the frontend and backend servers are running, you can access the application by navigating to `http://localhost:3000` in your web browser.
+
+### Additional Notes
+
+- Ensure that you have [Node.js](https://nodejs.org/) installed on your machine.
+- The backend server must be running for the frontend application to communicate with it.
+- If you encounter any issues, check the console for error messages and ensure all dependencies are correctly installed.
+
+## Features
+
+### Admin Authentication
+- **Forgot Password**: Admin can reset the password  by getting reset link via registered email id. 
+- **Login**: Secure login for Admin.
+
+### Admin Functionality
+- **Analysis**: Admin can analysis of cars with their brand.
+- **Brand creation**: Admin can create new Brand or Delte the brand and View.
+- **Vehicle creation**: Can also create new vehicle with their respective brand and also can delete.
+
+### User Functionality
+- **Car Browsing**: User can browse the car based on Brands or Vehicle category.
+- **Suggestions**: User getting Alternative car suggestion based on their category of selected car.
+- **Color Options**: User can see list of available color in car and also change the color of vehicle.
+- **Price**: User can see Citywise price of vehicle.
+
+
+
+### Dashboard
+- **User-Specific Dashboards**: Separate dashboards for employees and companies to manage their activities and interactions.
+
+### Search and Filters
+- **Advanced Search**: Search functionality to find companies or employees based on various criteria.
+- **Filters**: Apply filters to narrow down search results for better matches.
+
+### Notifications
+- **Real-Time Updates**: Notifications for messages and interactions between employees and companies.
+
+### Responsive Design
+- **Mobile Friendly**: Fully responsive design ensuring usability across different devices and screen sizes.
+
+### Security
+- **Token-Based Authentication**: Secure token-based authentication for user sessions.
+- **Data Privacy**: Ensuring data privacy and security for all user information.
+
+## Technologies Used
+
+- **Frontend**: React, React Router DOM, Bootstrap 5
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB (using Mongoose)
+- **Authentication**: JSON Web Tokens (JWT), bcrypt for password hashing
+
+## Contributing
+...
