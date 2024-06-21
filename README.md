@@ -24,57 +24,88 @@ A comprehensive Team Management System where employees and companies can registe
     npm install
     ```
 
+## Features
+
+### Redux Use
+- **State Management**:  Utilized Redux for centralized state management across components, handling actions like fetching, adding, and deleting entities such as brands and vehicles. 
+- **Async Actions**:  Implemented Redux Thunks for asynchronous operations, integrating with React Router for seamless navigation upon successful actions.
+
+
+### Admin Authentication
+- **Forgot Password**: Admin can reset the password  by getting reset link via registered email id. 
+- **Login**: Secure login for Admin.
+
+### Admin Functionality
+- **Analysis**: Admin can analysis of cars with their brand.
+- **Brand creation**: Admin can create new Brand or Delte the brand and View.
+- **Vehicle creation**: Can also create new vehicle with their respective brand and also can delete.
+
+### User Functionality
+- **Car Browsing**: User can browse the car based on Brands or Vehicle category.
+- **Suggestions**: User getting Alternative car suggestion based on their category of selected car.
+- **Color Options**: User can see list of available color in car and also change the color of vehicle.
+- **Price**: User can see Citywise price of vehicle.
+
+### Security
+- **Token-Based Authentication**: Secure token-based authentication for user sessions.
+- **Data Privacy**: Ensuring data privacy and security for all user information.
+
+## Technologies Used
+
+- **Frontend**:  React, React Router DOM, Redux (for state management), Axios (for HTTP requests), Ant Design (antd) or Material-UI (for UI components)
+- **Backend**: Node.js, Express.js
+- **Database**: MongoDB (using Mongoose)
+- **Authentication**: JSON Web Tokens (JWT), bcrypt (for password hashing)
+
+
 ## Screenshots
 
 ### Dashboard
 ![Dashboard](./screenshots/dash1.png)
 
-### Dashboard (page 2) 
+### Dashboard (Top Brands) 
 ![Dashboard](./screenshots/dash2.png)
 
-### Employee Dashboard
+### Dashboard (Latest cars) 
 ![Employee Dashboard](./screenshots/dash3.png)
 
-### Employee Dashboard
+### Dashboard (All cars) 
 ![Employee Dashboard](./screenshots/dash4.png)
 
-### Employee Dashboard
-![Employee Dashboard](./screenshots/dash4.png)
-
-### Employee Dashboard
+### Dashboard (Car data) 
 ![Employee Dashboard](./screenshots/dash5.png)
 
-### Employee Dashboard
+### Dashboard (Overview and specification) 
 ![Employee Dashboard](./screenshots/dash6.png)
 
-### Employee Dashboard
+### Dashboard (varients) 
 ![Employee Dashboard](./screenshots/dash7.png)
 
-### Employee Dashboard
+### Dashboard (colors) 
 ![Employee Dashboard](./screenshots/dash8.png)
 
-### Company Dashboard
+### Admin Dashboard (login)
 ![Company Dashboard](./screenshots/admin1.png)
 
-### Employee Login
+### Admin Dashboard (register)
 ![Employee Login](./screenshots/admin2.png)
 
-### Company Login
+### Admin Dashboard (forgot password)
 ![Company Login](./screenshots/admin3.png)
 
-### List of Companies (Page 1)
+### Admin Dashboard (Analysis)
 ![List of Companies 1](./screenshots/admin4.png)
 
-### List of Companies (Page 2)
+### Admin Dashboard (Brands)
 ![List of Companies 2](./screenshots/admin5.png)
 
-### List of Employees (Page 1)
+### Admin Dashboard (Add Brand)
 ![List of Employees 1](./screenshots/admin6.png)
 
-### List of Employees (Page 2)
+### Admin Dashboard (Cars)
 ![List of Employees 2](./screenshots/admin7.png)
 
-### Employee Dashboard
+### Error Page
 ![Employee Dashboard](./screenshots/admin8.png)
 
 ## Usage
@@ -123,48 +154,6 @@ Once both the frontend and backend servers are running, you can access the appli
 - The backend server must be running for the frontend application to communicate with it.
 - If you encounter any issues, check the console for error messages and ensure all dependencies are correctly installed.
 
-## Features
-
-### Admin Authentication
-- **Forgot Password**: Admin can reset the password  by getting reset link via registered email id. 
-- **Login**: Secure login for Admin.
-
-### Admin Functionality
-- **Analysis**: Admin can analysis of cars with their brand.
-- **Brand creation**: Admin can create new Brand or Delte the brand and View.
-- **Vehicle creation**: Can also create new vehicle with their respective brand and also can delete.
-
-### User Functionality
-- **Car Browsing**: User can browse the car based on Brands or Vehicle category.
-- **Suggestions**: User getting Alternative car suggestion based on their category of selected car.
-- **Color Options**: User can see list of available color in car and also change the color of vehicle.
-- **Price**: User can see Citywise price of vehicle.
-
-
-
-### Dashboard
-- **User-Specific Dashboards**: Separate dashboards for employees and companies to manage their activities and interactions.
-
-### Search and Filters
-- **Advanced Search**: Search functionality to find companies or employees based on various criteria.
-- **Filters**: Apply filters to narrow down search results for better matches.
-
-### Notifications
-- **Real-Time Updates**: Notifications for messages and interactions between employees and companies.
-
-### Responsive Design
-- **Mobile Friendly**: Fully responsive design ensuring usability across different devices and screen sizes.
-
-### Security
-- **Token-Based Authentication**: Secure token-based authentication for user sessions.
-- **Data Privacy**: Ensuring data privacy and security for all user information.
-
-## Technologies Used
-
-- **Frontend**: React, React Router DOM, Bootstrap 5
-- **Backend**: Node.js, Express.js
-- **Database**: MongoDB (using Mongoose)
-- **Authentication**: JSON Web Tokens (JWT), bcrypt for password hashing
 
 ## Contributing
 ...
