@@ -78,7 +78,7 @@ The Indian Car Portal provides a user-friendly interface for exploring a diverse
 ### Dashboard (Overview and specification) 
 ![Employee Dashboard](./screenshots/dash6.png)
 
-### Dashboard (varients) 
+### Dashboard (variants) 
 ![Employee Dashboard](./screenshots/dash7.png)
 
 ### Dashboard (colors) 
