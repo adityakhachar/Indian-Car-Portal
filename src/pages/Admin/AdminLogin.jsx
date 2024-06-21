@@ -1,5 +1,3 @@
-// AdminLogin.js
-
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -7,6 +5,7 @@ const AdminLogin = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,14 +21,14 @@ const AdminLogin = () => {
       const data = await response.json();
 
       if (response.ok) {
-        localStorage.setItem('authToken', data.token); // Assuming token is returned as 'token'
+        localStorage.setItem('authToken', data.token); // Store authToken in localStorage
         navigate('/dashboard');
       } else {
-        alert(data.message || "Wrong Credential!!");
+        setError(data.message || 'Login failed');
       }
     } catch (error) {
-      console.error("Error during login:", error);
-      alert("Server error. Please try again later.");
+      console.error('Error during login:', error);
+      setError('Server error. Please try again later.');
     }
   };
 
@@ -43,14 +42,16 @@ const AdminLogin = () => {
         </div>
         <form onSubmit={handleSubmit} style={{ marginTop: '4.5rem', padding: '2rem', paddingRight: '2rem' }}>
           <h3 style={{ fontSize: '1.75rem', fontWeight: 'bold', color: '#718096', marginBottom: '2rem', textAlign: 'center' }}>Login</h3>
+          {error && <div style={{ color: 'red', marginBottom: '1rem' }}>{error}</div>}
           <div style={{ marginBottom: '1rem' }}>
             <input
               name="email"
-              type="text"
+              type="email" // Change type to email for better validation
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               style={{ backgroundColor: '#edf2f7', width: '100%', padding: '1rem', fontSize: '0.875rem', border: '1px solid transparent', transition: 'background-color 0.3s, border-color 0.3s', borderRadius: '0.375rem' }}
               placeholder="Enter email"
+              required // Add required attribute for HTML5 validation
             />
           </div>
           <div style={{ marginBottom: '1rem' }}>
@@ -61,6 +62,7 @@ const AdminLogin = () => {
               onChange={(e) => setPassword(e.target.value)}
               style={{ backgroundColor: '#edf2f7', width: '100%', padding: '1rem', fontSize: '0.875rem', border: '1px solid transparent', transition: 'background-color 0.3s, border-color 0.3s', borderRadius: '0.375rem' }}
               placeholder="Enter password"
+              required // Add required attribute for HTML5 validation
             />
           </div>
           <div style={{ marginTop: '1rem' }}>

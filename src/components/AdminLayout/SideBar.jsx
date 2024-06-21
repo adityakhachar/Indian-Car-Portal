@@ -13,7 +13,7 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/brands"> {/* Use Link component with "to" prop */}
+          <Link to="/admin/brands"> {/* Use Link component with "to" prop */}
             <i className="fas fa-database"></i> Brands
           </Link>
         </li>

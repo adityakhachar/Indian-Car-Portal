@@ -11,6 +11,7 @@ import ForgotPassword from './pages/Admin/ForgotPassword';
 import UserDashboard from './pages/User/UserDashboard';
 import CheckOut from './pages/User/CheckOut';
 import CarIntro from './components/UserLayout/CarIntro';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
           <Route path="/" element={<AdminLogin />} /> 
           <Route path="/admin/login" element={<AdminLogin />} /> 
           <Route path="/dashboard" element={<AdminDashboard/>} />
-          <Route path="/brands" element={<Brand/>} />
+          <Route path="/admin/brands" element={<Brand/>} />
           <Route path="/Admin/AddBrand" element={<AddBrand/>} />
           <Route path="/Admin/Vehicles" element={<Vehicle/>}/>
           <Route path="/Admin/AddVehicle" element={<AddVehicleForm/>}/>
@@ -30,7 +31,9 @@ function App() {
 
           <Route path="/user" element={<UserDashboard/>}/>  
           <Route path="/cars/:id" element={<CheckOut/>}/>   
-          <Route path="/carIntro" element={<CarIntro/>}/>          
+          <Route path="/carIntro" element={<CarIntro/>}/>    
+          <Route path="/*" element={<ErrorPage/>}/>    
+                
         </Routes>
       </div>
     </Router>

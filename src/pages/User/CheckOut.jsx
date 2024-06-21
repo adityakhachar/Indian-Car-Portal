@@ -51,7 +51,7 @@ const CheckOut = () => {
         <Link to="/user">Home</Link>
       </Breadcrumb.Item>
       <Breadcrumb.Item>
-      <Link to="/user/#newCars">All Car</Link>
+      <Link to="/user/#cars">All Car</Link>
       </Breadcrumb.Item>
       <Breadcrumb.Item>{vehicleName}</Breadcrumb.Item>
     </Breadcrumb>
