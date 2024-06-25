@@ -19,7 +19,8 @@ function App() {
       <div>
         <Routes>
           <Route path="/admin/register" element={<RegistrationPage />} /> {/* Correct route path */}
-          <Route path="/" element={<AdminLogin />} /> 
+          // <Route path="/" element={<AdminLogin />} /> 
+          <Route path="/" element={<UserDashboard />} /> 
           <Route path="/admin/login" element={<AdminLogin />} /> 
           <Route path="/dashboard" element={<AdminDashboard/>} />
           <Route path="/admin/brands" element={<Brand/>} />
