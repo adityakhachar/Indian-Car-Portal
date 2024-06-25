@@ -29,7 +29,7 @@ const CarColors = () => {
   useEffect(() => {
     const fetchVehicleData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/vehicles/${id}`);
+        const response = await axios.get(`https://indian-car-portal.onrender.com/api/vehicles/${id}`);
         if (response.data && response.data.colors) {
           setCarColors(response.data.colors);
           setCarName(response.data.name);
