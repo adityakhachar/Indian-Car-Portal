@@ -19,11 +19,11 @@ const CarPanel = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const categoriesResponse = await fetch('http://localhost:5000/api/categories');
+        const categoriesResponse = await fetch('https://indian-car-portal.onrender.com/api/categories');
         const categoriesData = await categoriesResponse.json();
         setCategories(categoriesData);
 
-        const brandsResponse = await fetch('http://localhost:5000/api/brands');
+        const brandsResponse = await fetch('https://indian-car-portal.onrender.com/api/brands');
         const brandsData = await brandsResponse.json();
         setBrands(brandsData);
 
@@ -44,7 +44,7 @@ const CarPanel = () => {
 
   const fetchVehiclesByCategory = async (categoryId) => {
     try {
-      const response = await fetch(`http://localhost:5000/api/vehicles/byCategory/${categoryId}`);
+      const response = await fetch(`https://indian-car-portal.onrender.com/api/vehicles/byCategory/${categoryId}`);
       const vehiclesData = await response.json();
 
       // Sort vehicles by launch date in descending order
@@ -58,7 +58,7 @@ const CarPanel = () => {
 
   const fetchVehicles = async () => {
     try {
-      const response = await fetch('http://localhost:5000/api/vehicles');
+      const response = await fetch('https://indian-car-portal.onrender.com/api/vehicles');
       const vehiclesData = await response.json();
 
       // Get the last 4 cars and reverse them to get in descending order
