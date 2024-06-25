@@ -23,19 +23,19 @@ const Sidebar = () => {
           </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fas fa-list-alt"></i> Users
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fas fa-file-alt"></i> Forms
-          </a>
+          </Link>
         </li>
         <li>
-          <a href="#">
+          <Link to="#">
             <i className="fas fa-table"></i> Tables
-          </a>
+          </Link>
         </li>
       </ul>
     </div>
