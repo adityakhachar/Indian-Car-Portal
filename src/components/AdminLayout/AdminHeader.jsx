@@ -18,7 +18,7 @@ const AdminHeader = () => {
         //   return;
         // }
 
-        const response = await fetch('http://localhost:5000/api/admin/auth/protected-route', {
+        const response = await fetch('https://indian-car-portal.onrender.com/api/admin/auth/protected-route', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`
