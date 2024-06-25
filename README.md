@@ -1,5 +1,5 @@
 # AutoGuide
-A comprehensive Team Management System where employees and companies can register, view each other's details, and get in touch. This responsive web application ensures seamless interaction between job seekers and employers, accessible across various devices including mobile.
+The Indian Car Portal provides a user-friendly interface for exploring a diverse range of vehicles from leading Indian brands. Features include detailed vehicle specifications, intuitive comparison tools, and secure JWT-based authentication for user privacy. This platform aims to simplify the car shopping process by offering comprehensive information and personalized features, ensuring a seamless and informed decision-making experience for every user.
 
 ## Table of Contents
 - [Installation](#installation)
@@ -78,7 +78,7 @@ A comprehensive Team Management System where employees and companies can registe
 ### Dashboard (Overview and specification) 
 ![Employee Dashboard](./screenshots/dash6.png)
 
-### Dashboard (varients) 
+### Dashboard (variants) 
 ![Employee Dashboard](./screenshots/dash7.png)
 
 ### Dashboard (colors) 
