@@ -28,7 +28,7 @@ const CarIntro = () => {
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/vehicles/${vehicleId}`);
+        const response = await axios.get(`https://indian-car-portal.onrender.com/api/vehicles/${vehicleId}`);
         console.log('Vehicle Data:', response.data); // Debugging: Log vehicle data
         setVehicle(response.data);
         fetchBrandName(response.data.brand_id); // Fetch brand name once vehicle data is fetched
@@ -42,7 +42,7 @@ const CarIntro = () => {
   // Function to fetch brand name by brand ID
   const fetchBrandName = async (brandId) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/brands/${brandId}`);
+      const response = await axios.get(`https://indian-car-portal.onrender.com/api/brands/${brandId}`);
       console.log('Brand Data:', response.data); // Debugging: Log brand data
       setBrandName(response.data.name); // Update brandName state with fetched brand name
     } catch (error) {
