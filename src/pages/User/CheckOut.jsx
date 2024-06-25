@@ -29,7 +29,7 @@ const CheckOut = () => {
   useEffect(() => {
     const fetchVehicle = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/api/vehicles/${vehicleId}`);
+        const response = await axios.get(`https://indian-car-portal.onrender.com/api/vehicles/${vehicleId}`);
         console.log('Vehicle Dataaaa:', response.data.name); // Debugging: Log vehicle data
         setVehicleName(response.data.name);
         // fetchBrandName(response.data.brand_id); // Fetch brand name once vehicle data is fetched
