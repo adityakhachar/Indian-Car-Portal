@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const AdminLogin = () => {
   const navigate = useNavigate();
@@ -71,10 +71,10 @@ const AdminLogin = () => {
             </button>
           </div>
           <p style={{ fontSize: '0.875rem', marginTop: '1rem', textAlign: 'center' }}>
-            <a href="/admin/forgotpass" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Forgot Password?</a>
+            <Link to="/admin/forgotpass" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Forgot Password?</Link>
           </p>
           <p style={{ fontSize: '0.875rem', marginTop: '1rem', textAlign: 'center' }}>
-            Don't have an account? <a href="/admin/register" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Create an account</a>
+            Don't have an account? <Link to="/admin/register" style={{ color: '#ed8936', fontWeight: '600', textDecoration: 'none', transition: 'color 0.3s' }}>Create an account</Link>
           </p>
         </form>
       </div>
