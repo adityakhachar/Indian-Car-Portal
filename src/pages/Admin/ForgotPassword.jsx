@@ -9,7 +9,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     try {
         alert("check you mail");
-      const response = await fetch('http://localhost:5000/api/admin/forgot-password', {
+      const response = await fetch('https://indian-car-portal.onrender.com/api/admin/forgot-password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
