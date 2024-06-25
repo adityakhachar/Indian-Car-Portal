@@ -52,14 +52,14 @@ const AddVehicles = () => {
   }, []);
 
   const fetchCategories = () => {
-    fetch("http://localhost:5000/api/categories")
+    fetch("https://indian-car-portal.onrender.com/api/categories")
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching categories:", error));
   };
 
   const fetchBrands = () => {
-    fetch("http://localhost:5000/api/brands")
+    fetch("https://indian-car-portal.onrender.com/api/brands")
       .then((response) => response.json())
       .then((data) => setBrands(data))
       .catch((error) => console.error("Error fetching brands:", error));
