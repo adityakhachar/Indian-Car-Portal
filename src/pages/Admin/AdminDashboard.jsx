@@ -96,7 +96,7 @@ const AdminDashboard = () => {
   }, []); 
   const fetchCategories = async () => {
     try {
-      const categoriesResponse = await fetch("http://localhost:5000/api/categories");
+      const categoriesResponse = await fetch("https://indian-car-portal.onrender.com/api/categories");
       if (!categoriesResponse.ok) {
         throw new Error(`HTTP error! Status: ${categoriesResponse.status}`);
       }
@@ -115,7 +115,7 @@ const AdminDashboard = () => {
 
   const fetchVehicleCounts = async () => {
     try {
-      const vehiclesResponse = await fetch("http://localhost:5000/api/vehicles");
+      const vehiclesResponse = await fetch("https://indian-car-portal.onrender.com/api/vehicles");
       if (!vehiclesResponse.ok) {
         throw new Error(`HTTP error! Status: ${vehiclesResponse.status}`);
       }
@@ -186,21 +186,21 @@ const AdminDashboard = () => {
 
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/brands")
+    fetch("https://indian-car-portal.onrender.com/api/brands")
       .then((response) => response.json())
       .then((data) => setBrands(data))
       .catch((error) => console.error("Error fetching brands:", error));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/vehicles")
+    fetch("https://indian-car-portal.onrender.com/api/vehicles")
       .then((response) => response.json())
       .then((data) => setVehicles(data))
       .catch((error) => console.error("Error fetching vehicles:", error));
   }, []);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/categories")
+    fetch("https://indian-car-portal.onrender.com/api/categories")
       .then((response) => response.json())
       .then((data) => setCategories(data))
       .catch((error) => console.error("Error fetching categories:", error));
@@ -394,7 +394,7 @@ function RecentOrders() {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:5000/api/brands")
+    fetch("https://indian-car-portal.onrender.com/api/brands")
       .then(response => {
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
@@ -405,7 +405,7 @@ function RecentOrders() {
         // Fetch car count for each brand
         const brandsWithCarCount = await Promise.all(
           data.map(async (brand) => {
-            const carCountResponse = await fetch(`http://localhost:5000/api/vehicles/brands/${brand._id}/cars`, {
+            const carCountResponse = await fetch(`https://indian-car-portal.onrender.com/api/vehicles/brands/${brand._id}/cars`, {
               method: "GET",
               headers: {
                 'Content-Type': 'application/json'
@@ -501,7 +501,7 @@ function DashboardChart() {
 
   const fetchBrandData = async () => {
     try {
-      const brandsResponse = await fetch("http://localhost:5000/api/brands");
+      const brandsResponse = await fetch("https://indian-car-portal.onrender.com/api/brands");
       if (!brandsResponse.ok) {
         throw new Error(`HTTP error! Status: ${brandsResponse.status}`);
       }
@@ -510,7 +510,7 @@ function DashboardChart() {
       const brandIds = brandsData.map((brand) => brand._id);
 
       const fetchCarCounts = brandIds.map((brandId) =>
-        fetch(`http://localhost:5000/api/vehicles/brands/${brandId}/cars`)
+        fetch(`https://indian-car-portal.onrender.com/api/vehicles/brands/${brandId}/cars`)
           .then((response) => {
             if (!response.ok) {
               throw new Error(`HTTP error! Status: ${response.status}`);
