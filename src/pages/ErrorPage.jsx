@@ -2,6 +2,7 @@
 
 import React from 'react';
 import '../assets/styles/ErrorPage.css'; // Import your CSS file
+import  Link from 'react-router-dom';
 
 const ErrorPage = () => {
   const handleHomePageClick = () => {
@@ -9,7 +10,8 @@ const ErrorPage = () => {
     if (window.location.pathname.startsWith('/admin')) {
       window.location.href = '/admin/login';
     } else {
-      window.location.href = '/user';
+      // window.location.href = '/user';
+      <Link to='/user'></Link>
     }
   };
 
